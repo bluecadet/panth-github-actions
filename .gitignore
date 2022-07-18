@@ -98,3 +98,4 @@
 
 /.vscode
 .ci/keys/*
+.DS_Store
