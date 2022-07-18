@@ -21,7 +21,6 @@
         "pantheon-systems/drupal-integrations": "^9",
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
-        "joachim-n/composer-manifest": "^1.1",
         "drupal/devel": "^4.1"
     },
     "require-dev": {
@@ -89,8 +88,7 @@
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "joachim-n/composer-manifest": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
