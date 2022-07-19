@@ -99,3 +99,5 @@
 /.vscode
 .ci/keys/*
 .DS_Store
+/node_modules
+/.cadet

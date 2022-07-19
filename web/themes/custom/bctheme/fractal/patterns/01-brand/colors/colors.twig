@@ -1,0 +1,263 @@
+<h1 style="margin-bottom: 50px; padding: 20px 30px;">Colors</h1>
+
+{% if colors %}
+  <div class="color-block-group">
+    <h2>Brand Colors</h2>
+    <div class="color-blocks">
+      <div class="color-blocks__inner">
+        {% for sassName, hex in colors %}
+          <div class="color-block">
+            <div class="color-block__tile" style="background-color: {{ hex }}"></div>
+            <div class="color-block__name"><span class="fractal-label">Sass:</span> <code class="fractal-code">{{ sassName }}</code></div>
+            <div class="color-block__name"><span class="fractal-label">Hex:</span> <code class="fractal-code">{{ hex }}</code></div>
+            <div class="color-block__name"><span class="fractal-label">Color Class:</span> <code class="fractal-code">.u-{{ sassName|replace({'$': '' }) }}</code></div>
+            <div class="color-block__name"><span class="fractal-label">Background Class:</span> <code class="fractal-code">._u-{{ sassName|replace({'$': '' }) }}</code></div>
+            <div class="color-block__name"><span class="fractal-label">Fill Class:</span> <code class="fractal-code">.u-fill-{{ sassName|replace({'$': '' }) }}</code></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+
+{% if groups %}
+  {% for name, group in groups %}
+    <div class="color-block-group">
+      <h2>{{ name }}</h2>
+      <div class="color-blocks">
+        <div class="color-blocks__inner">
+          {% for sassName, hex in group %}
+            <div class="color-block">
+              <div class="color-block__tile" style="background-color: {{ hex }}"></div>
+              <div class="color-block__name"><span class="fractal-label">Sass:</span> <code class="fractal-code">{{ sassName }}</code></div>
+              <div class="color-block__name"><span class="fractal-label">Hex:</span> <code class="fractal-code">{{ hex }}</code></div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+
+{# {% for hex, sassName in test %} #}
+{% if results %}
+
+  <div id="color-test-top" class="color-test">
+
+    <h2>Color Accessibility Checks - Matrix</h2>
+
+    <div style="margin-top: 40px; margin-bottom: 40px;">
+      <h3 id="color-matrix-details">About the Tests</h3>
+      <p>Color ratios are tested for AA and AAA with Small and Large font sizes. "Small" font sizes are <i>under</i> 24px, while "Large" is 24px or over.</p>
+      <ul aria-labelledby="color-matrix-details">
+        <li><p>Tests marked as "All Tests Passed" meet the minimum contrast ratio for both WCAG 2.1 AA and AAA standards.</p></li>
+        <li><p>Tests marked as "All Tests Failed" <i>do not</i> meet the minimum contrast ratio for both WCAG 2.1 AA and AAA standards.</p></li>
+        <li><p>Tests with mixed results:</p></li>
+        <ul>
+          <li><p>If both small and large pass, "AA: Pass" or "AAA: Pass" will be displayed.</p></li>
+          <li><p>If both small and large fail, "AA: Fail" or "AAA: Fail" will be displayed.</p></li>
+          <li><p>When Large passes but small does not, "AA Large: Pass" or "AAA Large: Pass" will be displayed</p></li>
+        </ul>
+      </ul>
+    </div>
+
+    {# {% else %}
+
+    <h2>Color Accessibility Checks</h2>
+
+    <details class="color-test__result-links">
+      <summary>Test Results</summary>
+      <ul aria-label="Color Test Result Links">
+        {% for result in results %}
+          <li><a href="#result-{{ result.name|replace({'$': ''}) }}">{{ result.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </details>
+
+    {% endif %} #}
+    <div class="color-matrix">
+      <table class="color-matrix__table">
+        <thead class="color-matrix__row color-matrix__row--header">
+          <tr>
+            <th id="color-name" class="color-matrix__self color-matrix__corner color-matrix__stick-left color-matrix__stick-top">
+              <h3>Text Color</h3>
+            </th>
+
+            {% for result in results %}
+              {% if loop.first %}
+
+                {# <th class="color-matrix__results"> #}
+                <th id="color-on-1" class="color-matrix__color-column-header color-matrix__stick-top">
+                  <div class="color-matrix__swatch--title">
+                    <h4><span>On Background:</span> {{ results.1.combinations.0.name }}</h4>
+                    <p>{{ results.1.combinations.0.hex }}</p>
+                  </div>
+                </th>
+                {% for item in result.combinations %}
+                  <th id="color-on-{{ loop.index + 1 }}" class="color-matrix__color-column-header color-matrix__stick-top">
+                    <div class="color-matrix__swatch--title">
+                      <h4><span>On Background:</span> {{ item.name }}</h4>
+                      <p>{{ item.hex }}</p>
+                    </div>
+                  </th>
+                {% endfor %}
+                  {# </div> #}
+
+              {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody class="color-matrix__table-body">
+          {% for result in results %}
+
+            <tr id="result-{{ result.name|replace({'$': ''}) }}" class="color-matrix__row">
+              <th headers="color-name" class="color-matrix__self color-matrix__stick-left">
+                <h4>{{ result.name }}</h4>
+                <p>{{ result.hex }}</p>
+              </th>
+
+              {% set resultIndex = loop.index %}
+              {% set resultLast = loop.last %}
+              {% set headerIndex = 0 %}
+
+              {% for item in result.combinations %}
+                {% set headerIndex = headerIndex + 1 %}
+
+                {% if resultIndex == loop.index %}
+                  <td headers="color-on-{{ headerIndex }}">
+                    <div class="color-matrix__swatch color-matrix__swatch--self">
+                      <span class="u-sr-only">Test on self skipped</span>
+                    </div>
+                  </td>
+                  {% set headerIndex = headerIndex + 1 %}
+                {% endif %}
+
+                {# {% set aa_status = item.accessibility.aa ? 'green' : 'red' %}
+                {% set aa_lg_status = item.accessibility.aaLarge ? 'green' : 'red' %}
+                {% set aaa_status = item.accessibility.aaa ? 'green' : 'red' %}
+                {% set aaa_lg_status = item.accessibility.aaaLarge ? 'green' : 'red' %}
+                {% set aa_fail = item.accessibility.aa and item.accessibility.aaLarge is same as(true) ? 'pass' : 'fail'  %}
+                {% set aa_fail = item.accessibility.aa and item.accessibility.aaLarge and item.accessibility.aaa and item.accessibility.aaaLarge is same as(true) ? 'glorious' : aa_fail  %} #}
+                {% set ratio = '<div class="color-matrix__ratio"><p style="color: ' ~ result.hex ~ '"><span class="u-sr-only">Contrast ratio&nbsp;</span>' ~ item.contrast|round(1, 'floor') ~'</p></div>' %}
+                <td headers="color-on-{{ headerIndex }}">
+
+                  {% if item.accessibility.aaLarge and item.accessibility.aa and item.accessibility.aaaLarge and item.accessibility.aaa %}
+                    {# Full Pass #}
+                    <div class="color-matrix__swatch color-matrix__swatch--full-pass" style="background-color: {{ item.hex }}">
+                      {{ ratio }}
+                      <div class="color-matrix__pill-wrapper">
+                        <p class="color-matrix__swatch-title color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">All Tests Passed</p>
+                      </div>
+                    </div>
+                  {% elseif not item.accessibility.aaLarge and not item.accessibility.aa and not item.accessibility.aaaLarge and not item.accessibility.aaa %}
+                    {# Full Failure #}
+                    <div class="color-matrix__swatch color-matrix__swatch--full-fail" style="background-color: {{ item.hex }}">
+                      {{ ratio }}
+                      <div class="color-matrix__pill-wrapper">
+                        <p class="color-matrix__swatch-title color-matrix__pill color-matrix__pill--fail" style="color: {{ item.hex }}">All Tests Failed</p>
+                      </div>
+                    </div>
+                  {% else %}
+
+                    {# Mixed Results #}
+                    <div class="color-matrix__swatch color-matrix__swatch--partial" style="background-color: {{ item.hex }}">
+                      {{ ratio }}
+                      {% if item.accessibility.aaLarge and item.accessibility.aa %}
+                        <div class="color-matrix__pill-wrapper">
+                          <p class="color-matrix__swatch-title color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AA: Pass</span></p>
+                        </div>
+                      {% else %}
+                        {% if item.accessibility.aa %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AA Small: Pass</p>
+                          </div>
+                        {# {% else %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--fail">AA Small: Fail</p>
+                          </div> #}
+                        {% endif %}
+
+                        {% if item.accessibility.aaLarge %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AA Large: Pass</p>
+                          </div>
+                        {# {% else %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--fail">AA Large: Fail</p>
+                          </div> #}
+                        {% endif %}
+                      {% endif %}
+
+                      {% if item.accessibility.aaaLarge and item.accessibility.aaa %}
+                        <div class="color-matrix__pill-wrapper">
+                          <p class="color-matrix__swatch-title color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AAA: Pass</p>
+                        </div>
+                      {% elseif not item.accessibility.aaaLarge and not item.accessibility.aaa %}
+                        <div class="color-matrix__pill-wrapper">
+                          <p class="color-matrix__pill color-matrix__pill--fail">AAA: Fail</p>
+                        </div>
+                      {% else %}
+
+                        {% if item.accessibility.aaa %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AAA Small: Pass</p>
+                          </div>
+                        {# {% else %}
+                          <div class="color-matrix__pill-wrapper">
+                          <p class="color-matrix__pill color-matrix__pill--fail">AAA Small: Fail</p>
+                        </div> #}
+                        {% endif %}
+
+                        {% if item.accessibility.aaaLarge %}
+                          <div class="color-matrix__pill-wrapper">
+                            <p class="color-matrix__pill color-matrix__pill--pass" style="background-color: {{ result.hex }}; color: {{ item.hex }}">AAA Large: Pass</p>
+                          </div>
+                        {# {% else %}
+                          <div class="color-matrix__pill-wrapper">
+                          <p class="color-matrix__pill color-matrix__pill--fail">AAA Large: Fail</p>
+                        </div> #}
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </td>
+
+                {% if resultLast and loop.last %}
+                  {% set headerIndex = headerIndex + 1 %}
+                  <td headers="color-on-{{ headerIndex }}">
+                    <div class="color-matrix__swatch color-matrix__swatch--self">
+                      <span class="u-sr-only">Test on self skipped</span>
+                    </div>
+                  </td>
+                {% endif %}
+
+
+              {% endfor %}
+            </tr>
+
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+{% endif %}
+
+
+{# <div class="color-blocks">
+  {% for color in colors %}
+    <div class="color-block">
+      <div class="color-block__tile u-bg-{{ color }}"></div>
+      <div class="color-block__name"><span class="fractal-label">Sass:</span> <code class="fractal-code">${{ color }}</code></div>
+      <div class="color-block__name"><span class="fractal-label">Color Class:</span> <code class="fractal-code">.u-c-{{ color }}</code></div>
+      <div class="color-block__name"><span class="fractal-label">Background Class:</span> <code class="fractal-code">.u-bg-{{ color }}</code></div>
+      <div class="color-block__name"><span class="fractal-label">Fill Class:</span> <code class="fractal-code">.u-fill-{{ color }}</code></div>
+      <div class="color-block__name"><span class="fractal-label">Stroke Class:</span> <code class="fractal-code">.u-stroke-{{ color }}</code></div>
+    </div>
+  {% endfor %}
+</div> #}

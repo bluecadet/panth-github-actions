@@ -1,0 +1,71 @@
+////
+/// Breakpoints
+/// @group Variables
+/// @author Bluecadet
+////
+
+// ======================================================
+// Breakpoint sizes for use in flexgrid and break() mixin
+// ======================================================
+
+$xs:    480px; // (480 / 16) * 1em;
+$xs-sm: 620px; //(620 / 16) * 1em;
+$sm:    750px; // (750 / 16) * 1em;
+$sm-md: 970px; // (970 / 16) * 1em;
+$md:    1100px; // (1100 / 16) * 1em;
+$lg:    1280px; // (1280 / 16) * 1em;
+$xl:    1400px; //(1400 / 16) * 1em;
+
+
+// =========================================
+// Breakpoints map for use in spacing mixins
+// =========================================
+
+$breakpoints: (
+  xs:    $xs,
+  xs-sm: $xs-sm,
+  sm:    $sm,
+  sm-md: $sm-md,
+  md:    $md,
+  lg:    $lg,
+  xl:    $xl,
+);
+
+
+// =================================================
+// Max Width map values for use in the break() mixin
+// =================================================
+
+$xs-max: (
+  max-width: $xs,
+);
+$xs-sm-max: (
+  max-width: $xs-sm,
+);
+$sm-max: (
+  max-width: $sm,
+);
+$sm-md-max: (
+  max-width: $sm-md,
+);
+$md-max: (
+  max-width: $md,
+);
+$lg-max: (
+  max-width: $lg,
+);
+$xl-max: (
+  max-width: $xl,
+);
+
+// ========================================================================================
+// Breakpoint Container Sizes (the size of the .container class at the matching breakpoint)
+// ========================================================================================
+
+$xs-container:    ($xs - 32px);
+$xs-sm-container: ($xs-sm - 32px);
+$sm-container:    ($sm - 32px);
+$sm-md-container: ($sm-md - 32px);
+$md-container:    ($md - 32px);
+$lg-container:    ($lg - 32px);
+$xl-container:    ($xl - 32px);
