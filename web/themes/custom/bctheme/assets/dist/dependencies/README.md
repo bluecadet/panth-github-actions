@@ -1,1 +1,0 @@
-Scripts such as `blazy` or `flickity` that are loaded by a Drupal Library should be placed in this folder.
