@@ -1,0 +1,1 @@
+function handleFirstTab(e){9===e.keyCode&&(document.body.classList.add("u-keyboard-user"),window.removeEventListener("keydown",handleFirstTab))}function initSiteDefaults(){window.addEventListener("keydown",handleFirstTab)}initSiteDefaults();
