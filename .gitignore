@@ -63,8 +63,6 @@
 /web/libraries/
 /web/private/scripts/quicksilver
 
-/web/modules/custom/*/assets/dist
-
 
 # Generally you should only ignore the root vendor directory. It's important
 # that core/assets/vendor and any other vendor directories within contrib or
@@ -103,3 +101,8 @@
 .DS_Store
 /node_modules
 /.cadet
+
+# :::::::::::::::::::::: cut ::::::::::::::::::::::
+
+/web/modules/themes/*/assets/dist
+/web/modules/custom/*/assets/dist
