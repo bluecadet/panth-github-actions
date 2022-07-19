@@ -1,5 +1,5 @@
-test_css:
+test:
   version: 1.x
   css:
     theme:
-      assets/dist/css/node_form.css: {}
+      assets/dist/css/app.css: {}
