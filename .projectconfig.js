@@ -26,7 +26,7 @@ module.exports = {
       'bctheme'
     ],
     modules: [          // Module Directory Names
-      // dir name
+      'custom_utilities'
     ]
   },
   paths: {

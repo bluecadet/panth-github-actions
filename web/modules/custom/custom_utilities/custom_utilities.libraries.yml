@@ -1,0 +1,5 @@
+test-css:
+  version: 1.x
+  css:
+    theme:
+      dist/css/node-form.css: {}
