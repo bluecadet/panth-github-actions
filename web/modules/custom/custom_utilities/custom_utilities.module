@@ -2,7 +2,5 @@
 
 // From core/modules/contextual/contextual.module.
 function custom_utilities_page_attachments(array &$page) {
-
   $page['#attached']['library'][] = 'custom_utilities/test';
-  ksm($page);
 }
