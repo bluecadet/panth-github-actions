@@ -21,7 +21,9 @@
         "pantheon-systems/drupal-integrations": "^9",
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
-        "drupal/devel": "^4.1"
+        "drupal/devel": "^4.1",
+        "pantheon-se/node-composer": "2.x-dev",
+        "imponeer/composer-yarn-installer": "^1.22"
     },
     "require-dev": {
         "drupal/core-dev": "^9.2"
@@ -29,7 +31,7 @@
     "conflict": {
             "drupal/drupal": "*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
         "drupal-scaffold": {
@@ -60,6 +62,18 @@
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
+        },
+        "mariusbuescher": {
+            "node-composer": {
+                "node-version": "14.19.0",
+                "yarn-version": "1.17.3"
+            }
+        },
+        "pantheon-se": {
+            "node-composer": {
+                "node-version": "14.19.0",
+                "yarn-version": "1.17.3"
+            }
         }
     },
     "autoload": {
@@ -88,7 +102,9 @@
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "mariusbuescher/node-composer": true,
+            "pantheon-se/node-composer": true
         }
     }
 }
