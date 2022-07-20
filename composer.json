@@ -21,8 +21,7 @@
         "pantheon-systems/drupal-integrations": "^9",
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
-        "drupal/devel": "^4.1",
-        "joachim-n/composer-manifest": "^1.1"
+        "drupal/devel": "^4.1"
     },
     "require-dev": {
         "drupal/core-dev": "^9.2"
@@ -61,12 +60,6 @@
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
-        },
-        "pantheon-se": {
-            "node-composer": {
-                "node-version": "14.19.0",
-                "yarn-version": "1.22.18"
-            }
         }
     },
     "autoload": {
@@ -95,8 +88,7 @@
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "joachim-n/composer-manifest": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
