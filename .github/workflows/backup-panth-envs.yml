@@ -1,3 +1,4 @@
+name: Pantheon Backups w/ Terminus
 on:
   schedule:
     - cron: '15 9 * * *'
