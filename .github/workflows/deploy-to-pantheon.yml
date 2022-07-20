@@ -138,6 +138,7 @@ jobs:
 
       - name: Create File
         run: |
+          mkdir -p /tmp/artifacts
           touch /tmp/artifacts/bob.txt
           echo "Hello Bob" >> /tmp/artifacts/bob.txt
 
