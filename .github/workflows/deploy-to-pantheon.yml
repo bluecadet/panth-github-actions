@@ -82,7 +82,7 @@ jobs:
         pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
       run: |
         git remote add pantheon $pantheon_repo
-        git push --force pantheon HEAD:master
+        git push pantheon HEAD:master
 
     # - name: Wait for Pantheon to fully sync code
     #   run: terminus workflow:wait panth-github-actions.dev --max=6000
