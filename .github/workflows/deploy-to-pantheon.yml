@@ -1,8 +1,25 @@
 name: Deploy to Pantheon
-on:
-  push:
-    branches:
-      - 'master'
+on: push
+
+env:
+  TZ: "/usr/share/zoneinfo/America/New_York"
+  TERM: dumb
+  ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+  ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+  ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+  GITHUB_TOKEN: ${{ github.token }}
+  TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
+  TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
+  CI_BRANCH: ${{ github.head_ref || github.ref_name }}
+  COMMIT_SHA: ${{ github.sha }}
+  CI_BUILD_NUMBER: ${{ github.run_number }}
+  DEFAULT_SITE: ${{ secrets.TERMINUS_SITE }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  GITHUB_OWNER: ${{ github.repository_owner }}
+  CI_PROJECT_NAME: ${{ github.repository }}
+  PR_NUMBER: ${{ github.event.number }}
+  CI_PULL_REQUEST: ${{ github.event.pull_request._links.html.href }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
