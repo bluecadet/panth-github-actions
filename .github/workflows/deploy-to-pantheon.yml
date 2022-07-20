@@ -1,5 +1,8 @@
 name: Deploy to Pantheon
-on: push
+on:
+  push:
+    branches:
+      - 'master'
 
 # env:
 #   TZ: "/usr/share/zoneinfo/America/New_York"
@@ -82,7 +85,7 @@ jobs:
         pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
       run: |
         git remote add pantheon $pantheon_repo
-        git push pantheon HEAD:master
+        # git push pantheon HEAD:master
 
     # - name: Wait for Pantheon to fully sync code
     #   run: terminus workflow:wait panth-github-actions.dev --max=6000
