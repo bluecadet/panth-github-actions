@@ -22,8 +22,7 @@
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
         "drupal/devel": "^4.1",
-        "pantheon-se/node-composer": "2.x-dev",
-        "imponeer/composer-yarn-installer": "^1.22"
+        "pantheon-se/node-composer": "2.x-dev"
     },
     "require-dev": {
         "drupal/core-dev": "^9.2"

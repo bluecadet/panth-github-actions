@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12308852ec55966ec6bb837510a08915",
+    "content-hash": "e84bd6a50af35f7108a541bc95ec76c2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3376,49 +3376,6 @@
             "time": "2022-06-20T21:43:03+00:00"
         },
         {
-            "name": "imponeer/composer-yarn-installer",
-            "version": "v1.22.10-p5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/imponeer/composer-yarn-installer.git",
-                "reference": "f3276a1db7818508a95ccbd42463e939bd682a26"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/composer-yarn-installer/zipball/f3276a1db7818508a95ccbd42463e939bd682a26",
-                "reference": "f3276a1db7818508a95ccbd42463e939bd682a26",
-                "shasum": ""
-            },
-            "require": {
-                "mariusbuescher/node-composer": ">1.2.2"
-            },
-            "provide": {
-                "yarnpkg/yarn": "1.22.10"
-            },
-            "type": "metapackage",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raimondas Rimkevičius",
-                    "email": "github@mekdrop.name"
-                }
-            ],
-            "description": "Installs specific yarn version in vendor/",
-            "keywords": [
-                "frontend",
-                "javascript",
-                "yarn"
-            ],
-            "support": {
-                "issues": "https://github.com/imponeer/composer-yarn-installer/issues",
-                "source": "https://github.com/imponeer/composer-yarn-installer/tree/v1.22.10-p5"
-            },
-            "time": "2020-11-14T00:11:43+00:00"
-        },
-        {
             "name": "justinrainbow/json-schema",
             "version": "5.2.12",
             "source": {
@@ -3866,62 +3823,6 @@
                 }
             ],
             "time": "2021-11-16T10:29:06+00:00"
-        },
-        {
-            "name": "mariusbuescher/node-composer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mariusbuescher/node-composer.git",
-                "reference": "72c981de4bd9f367a1bfd011ea7892c73a60ac1c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mariusbuescher/node-composer/zipball/72c981de4bd9f367a1bfd011ea7892c73a60ac1c",
-                "reference": "72c981de4bd9f367a1bfd011ea7892c73a60ac1c",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "composer/composer": "^1.4 || ^2.0",
-                "php": ">=7.1",
-                "symfony/filesystem": ">=2.7",
-                "symfony/process": "^2.7 || >=3.0"
-            },
-            "default-branch": true,
-            "type": "composer-plugin",
-            "extra": {
-                "class": "MariusBuescher\\NodeComposer\\NodeComposerPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "MariusBuescher\\NodeComposer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marius Büscher",
-                    "email": "marius.buescher@gmx.de"
-                }
-            ],
-            "description": "Installs composer nodejs or/and npm in vendor/",
-            "homepage": "https://github.com/mariusbuescher/node-composer",
-            "keywords": [
-                "Node.js",
-                "frontend",
-                "javascript",
-                "npm",
-                "yarn"
-            ],
-            "support": {
-                "issues": "https://github.com/mariusbuescher/node-composer/issues",
-                "source": "https://github.com/mariusbuescher/node-composer/tree/master"
-            },
-            "time": "2020-11-07T07:07:52+00:00"
         },
         {
             "name": "masterminds/html5",
