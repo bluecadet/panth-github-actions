@@ -1,8 +1,6 @@
 name: Deploy to Pantheon
-on:
-  push:
-    branches:
-      - 'master'
+on: push
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -52,6 +50,7 @@ jobs:
       env:
         pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
       run: |
+        BASE_BRANCH=${GITHUB_REF##*/}
         git remote add pantheon $pantheon_repo
         git config user.mail "bc-bot@bluecadet.com"
         git config user.name "Bluecadet Bot"
@@ -59,4 +58,4 @@ jobs:
         cat .gitignore-panth >> .gitignore
         git add .
         git commit -q -m 'Build assets for dev.'
-        git push --force pantheon HEAD:master
+        git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
