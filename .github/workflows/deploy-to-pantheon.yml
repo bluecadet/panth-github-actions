@@ -54,7 +54,7 @@ jobs:
         git remote add pantheon $pantheon_repo
         git config user.mail "bc-bot@bluecadet.com"
         git config user.name "Bluecadet Bot"
-        git rm `cat .gitignore-panth `
+        git rm `cat .gitignore-panth | sed 's/^\///g'`
         cat .gitignore-panth >> .gitignore
         git add .
         git commit -q -m 'Build assets for dev.'
