@@ -60,4 +60,4 @@ jobs:
         cat .gitignore-panth >> .gitignore
         git add .
         git commit -q -m 'Build assets for dev.'
-        git push --force pantheon HEAD:refs/heads/$GITHUB_REF_NAME
+        git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
