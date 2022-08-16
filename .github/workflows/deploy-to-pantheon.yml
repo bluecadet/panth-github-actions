@@ -46,6 +46,8 @@ jobs:
         npm run out
         gulp build
 
+    - uses: hmarr/debug-action@v2
+
     - name: deployer
       env:
         pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
