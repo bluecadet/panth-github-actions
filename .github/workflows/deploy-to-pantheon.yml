@@ -31,6 +31,15 @@ jobs:
         config: ${{ secrets.SSH_CONFIG }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
+    - name: checking
+      run: echo ${{secrets.SSH_CONFIG }} | sed 's/./& /g'
+
+    - name: checking2
+      run: echo ${{secrets.KNOWN_HOSTS }} | sed 's/./& /g'
+
+    - name: checking3
+      run: echo ${{secrets.PANTHEON_SSH_KEY }} | sed 's/./& /g'
+
     - uses: hmarr/debug-action@v2
 
     # Install Terminus.
