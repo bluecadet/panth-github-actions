@@ -216,8 +216,6 @@ echo 'Contents of BASH_ENV:'
 cat $BASH_ENV
 echo
 
-echo $BASH_ENV >> $GITHUB_ENV
-
 echo -e "Copying Bash contents to file"
 cp $BASH_ENV  bash_env.txt
 
