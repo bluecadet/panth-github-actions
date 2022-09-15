@@ -195,26 +195,28 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 ) >> $BASH_ENV
 
 # If a Terminus machine token and site name are defined
-if [[ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]]
-then
+# if [[ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]]
+# then
 
-  # Authenticate with Terminus
-  terminus -n auth:login --machine-token=$TERMINUS_MACHINE_TOKEN > /dev/null 2>&1
+#   # Authenticate with Terminus
+#   terminus -n auth:login --machine-token=$TERMINUS_MACHINE_TOKEN > /dev/null 2>&1
 
-  # Use Terminus to fetch variables
-  TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
+#   # Use Terminus to fetch variables
+#   TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
 
-  # And add those variables to $BASH_ENV
-  (
-    echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
-  ) >> $BASH_ENV
-fi
+#   # And add those variables to $BASH_ENV
+#   (
+#     echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
+#   ) >> $BASH_ENV
+# fi
 
 source $BASH_ENV
 
 echo 'Contents of BASH_ENV:'
 cat $BASH_ENV
 echo
+
+echo $BASH_ENV >> $GITHUB_ENV
 
 echo -e "Copying Bash contents to file"
 cp $BASH_ENV  bash_env.txt
