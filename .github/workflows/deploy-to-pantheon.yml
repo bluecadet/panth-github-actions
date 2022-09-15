@@ -31,6 +31,9 @@ jobs:
         config: ${{ secrets.SSH_CONFIG }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
+    - name: Setup Environment Vars
+      run: ./.ci/scripts/env/init-env-vars.sh
+
     - uses: hmarr/debug-action@v2
 
     # Install Terminus.
