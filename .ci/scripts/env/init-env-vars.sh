@@ -25,13 +25,13 @@ node ./.ci/scripts/env/init-env-vars.js
 # environment variable.
 #
 
-CI_BRANCH=${CI_BRANCH:-$CIRCLE_BRANCH}
-CI_BUILD_NUMBER=${CI_BUILD_NUMBER:-$CIRCLE_BUILD_NUM}
-CI_PROJECT_NAME=${CI_PROJECT_NAME:-CIRCLE_PROJECT_REPONAME}
+# CI_BRANCH=${CI_BRANCH:-$CIRCLE_BRANCH}
+# CI_BUILD_NUMBER=${CI_BUILD_NUMBER:-$CIRCLE_BUILD_NUM}
+# CI_PROJECT_NAME=${CI_PROJECT_NAME:-CIRCLE_PROJECT_REPONAME}
 
 # Circle sets both $CIRCLE_PULL_REQUEST and $CI_PULL_REQUEST.
-PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
-PR_NUMBER=${PR_NUMBER##*/}
+# PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
+# PR_NUMBER=${PR_NUMBER##*/}
 
 # Set up BASH_ENV if it was not set for us.
 BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
@@ -43,21 +43,21 @@ GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
 LATEST_GIT_MSG=$(git log -1 --pretty=%B)
 
 # We will also set the default site name to be the same as the repository name.
-DEFAULT_SITE=${DEFAULT_SITE:-$CI_PROJECT_NAME}
+# DEFAULT_SITE=${DEFAULT_SITE:-$CI_PROJECT_NAME}
 
 # By default, we will make the main branch master.
-DEFAULT_BRANCH=${DEFAULT_BRANCH:-master}
+# DEFAULT_BRANCH=${DEFAULT_BRANCH:-master}
 
-# Get default branch from GITHUB.
-mkdir -p git_data
-GITHUB_REPO_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-echo -e ${GITHUB_REPO_URL}
-curl -s -H "Authorization: token ${GITHUB_TOKEN}" ${GITHUB_REPO_URL} > git_data/git_repo_data.json
-DEFAULT_BRANCH=$(cat git_data/git_repo_data.json | jq -r '.default_branch')
-echo -e "\nRsyncing git_data files to /tmp/workspace..."
-rsync -rlvz git_data /tmp/workspace
-echo -e "\nRsyncing git_data files to /tmp/artifacts..."
-rsync -rlvz git_data /tmp/artifacts
+# # Get default branch from GITHUB.
+# mkdir -p git_data
+# GITHUB_REPO_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+# echo -e ${GITHUB_REPO_URL}
+# curl -s -H "Authorization: token ${GITHUB_TOKEN}" ${GITHUB_REPO_URL} > git_data/git_repo_data.json
+# DEFAULT_BRANCH=$(cat git_data/git_repo_data.json | jq -r '.default_branch')
+# echo -e "\nRsyncing git_data files to /tmp/workspace..."
+# rsync -rlvz git_data /tmp/workspace
+# echo -e "\nRsyncing git_data files to /tmp/artifacts..."
+# rsync -rlvz git_data /tmp/artifacts
 
 # Plan proper env and if we should process jobs...
 SHOULD_BUILD_JOB=true
@@ -67,10 +67,10 @@ CLONE_CONTENT=false
 if [[ ${CI_BRANCH} == "master" ]] ; then
   # Use dev as the environment.
 	DEFAULT_ENV=${DEFAULT_ENV:-dev}
-  CLONE_CONTENT=TRUE
+  CLONE_CONTENT=true
 elif [[ ${CI_BRANCH} == ${DEFAULT_BRANCH} ]] ; then
   DEFAULT_ENV="default-md"
-  CLONE_CONTENT=TRUE
+  CLONE_CONTENT=true
 elif [[ $CI_BRANCH == release/* ]]; then
   # If release branch.
   DEFAULT_ENV=$(relBranchName $CI_BRANCH)
