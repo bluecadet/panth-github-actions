@@ -217,7 +217,7 @@ cat $BASH_ENV
 echo
 
 echo -e "Copying Bash contents to file"
-cp $BASH_ENV  /tmp/workspace/bash_env.txt
+cp $BASH_ENV  bash_env.txt
 
 # Avoid ssh prompting when connecting to new ssh hosts
 mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
