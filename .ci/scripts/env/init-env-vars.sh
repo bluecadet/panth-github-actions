@@ -204,7 +204,6 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
   echo "CI_PROJECT_REPONAME='$CI_PROJECT_REPONAME'"
   echo "DEFAULT_ENV='$DEFAULT_ENV'"
   echo 'TERMINUS_HIDE_UPDATE_MESSAGE=1'
-  echo "TERMINUS_SITE='$TERMINUS_SITE'"
   echo "TERMINUS_ENV='$TERMINUS_ENV'"
   echo "DEFAULT_BRANCH='$DEFAULT_BRANCH'"
   # TODO: Reconcile with environment variables set by build:project:create

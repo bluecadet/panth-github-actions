@@ -8,11 +8,12 @@ env:
   ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
   GITHUB_TOKEN: ${{ github.token }}
   TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
-  TEST_SITE_NAME: ${{ secrets.TERMINUS_SITE }}
+  TERMINUS_SITE: "panth-github-actions"
+  TEST_SITE_NAME: "panth-github-actions"
   CI_BRANCH: ${{ github.head_ref || github.ref_name }}
   COMMIT_SHA: ${{ github.sha }}
   CI_BUILD_NUMBER: ${{ github.run_number }}
-  DEFAULT_SITE: ${{ secrets.TERMINUS_SITE }}
+  DEFAULT_SITE: "panth-github-actions"
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
