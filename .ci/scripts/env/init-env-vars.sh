@@ -156,43 +156,83 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 # Bitbucket has similar issues:
 # https://bitbucket.org/site/master/issues/18262/feature-request-pipeline-command-to-modify
 #=====================================================================================================================
+# (
+#   echo 'export PATH=$PATH:$HOME/bin'
+#   echo "export PR_NUMBER=$PR_NUMBER"
+#   echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
+#   echo "export DEFAULT_SITE='$DEFAULT_SITE'"
+#   echo "export CI_PR_URL='$CI_PR_URL'"
+#   echo "export CI_PROJECT_USERNAME='$CI_PROJECT_USERNAME'"
+#   echo "export CI_PROJECT_REPONAME='$CI_PROJECT_REPONAME'"
+#   echo "export DEFAULT_ENV='$DEFAULT_ENV'"
+#   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
+#   echo "export TERMINUS_SITE='$TERMINUS_SITE'"
+#   echo "export TERMINUS_ENV='$TERMINUS_ENV'"
+#   echo "export DEFAULT_BRANCH='$DEFAULT_BRANCH'"
+#   # TODO: Reconcile with environment variables set by build:project:create
+#   echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
+#   echo 'export BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
+#   echo 'export BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
+#   echo "export MULTIDEV_SITE_URL='https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
+#   echo "export DEV_SITE_URL='https://dev-$TERMINUS_SITE.pantheonsite.io/'"
+#   echo "export TEST_SITE_URL='https://test-$TERMINUS_SITE.pantheonsite.io/'"
+#   echo "export LIVE_SITE_URL='$LIVE_SITE_URL'"
+#   echo "export PANTHEON_LIVE_SITE_URL='$PANTHEON_LIVE_SITE_URL'"
+#   echo "export ARTIFACTS_DIR='artifacts'"
+#   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
+#   echo "export SHOULD_BUILD_JOB=$SHOULD_BUILD_JOB"
+#   echo "export CLONE_CONTENT=$CLONE_CONTENT"
+#   echo "export GITHUB_API_URL=$GITHUB_API_URL"
+#   echo "export LATEST_GIT_MSG='$LATEST_GIT_MSG'"
+#   echo "export BACKSTOP_REF_ENV='$BACKSTOP_REF_ENV'"
+#   echo "export BACKSTOP_TEST_ENV='$BACKSTOP_TEST_ENV'"
+#   echo "export ICON_REPORT='$ICON_REPORT'"
+#   echo "export ICON_PASSED='$ICON_PASSED'"
+#   echo "export ICON_FAILED='$ICON_FAILED'"
+#   echo "export ICON_WARNING='$ICON_WARNING'"
+#   echo "export ICON_CHECK='$ICON_CHECK'"
+#   echo "export ICON_ARROW='$ICON_ARROW'"
+# ) >> $BASH_ENV
+
 (
-  echo 'export PATH=$PATH:$HOME/bin'
-  echo "export PR_NUMBER=$PR_NUMBER"
-  echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
-  echo "export DEFAULT_SITE='$DEFAULT_SITE'"
-  echo "export CI_PR_URL='$CI_PR_URL'"
-  echo "export CI_PROJECT_USERNAME='$CI_PROJECT_USERNAME'"
-  echo "export CI_PROJECT_REPONAME='$CI_PROJECT_REPONAME'"
-  echo "export DEFAULT_ENV='$DEFAULT_ENV'"
-  echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
-  echo "export TERMINUS_SITE='$TERMINUS_SITE'"
-  echo "export TERMINUS_ENV='$TERMINUS_ENV'"
-  echo "export DEFAULT_BRANCH='$DEFAULT_BRANCH'"
+  echo 'PATH=$PATH:$HOME/bin'
+  echo "PR_NUMBER=$PR_NUMBER"
+  echo "CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
+  echo "DEFAULT_SITE='$DEFAULT_SITE'"
+  echo "CI_PR_URL='$CI_PR_URL'"
+  echo "CI_PROJECT_USERNAME='$CI_PROJECT_USERNAME'"
+  echo "CI_PROJECT_REPONAME='$CI_PROJECT_REPONAME'"
+  echo "DEFAULT_ENV='$DEFAULT_ENV'"
+  echo 'TERMINUS_HIDE_UPDATE_MESSAGE=1'
+  echo "TERMINUS_SITE='$TERMINUS_SITE'"
+  echo "TERMINUS_ENV='$TERMINUS_ENV'"
+  echo "DEFAULT_BRANCH='$DEFAULT_BRANCH'"
   # TODO: Reconcile with environment variables set by build:project:create
-  echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
-  echo 'export BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
-  echo 'export BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
-  echo "export MULTIDEV_SITE_URL='https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export DEV_SITE_URL='https://dev-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export TEST_SITE_URL='https://test-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export LIVE_SITE_URL='$LIVE_SITE_URL'"
-  echo "export PANTHEON_LIVE_SITE_URL='$PANTHEON_LIVE_SITE_URL'"
-  echo "export ARTIFACTS_DIR='artifacts'"
-  echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
-  echo "export SHOULD_BUILD_JOB=$SHOULD_BUILD_JOB"
-  echo "export CLONE_CONTENT=$CLONE_CONTENT"
-  echo "export GITHUB_API_URL=$GITHUB_API_URL"
-  echo "export LATEST_GIT_MSG='$LATEST_GIT_MSG'"
-  echo "export BACKSTOP_REF_ENV='$BACKSTOP_REF_ENV'"
-  echo "export BACKSTOP_TEST_ENV='$BACKSTOP_TEST_ENV'"
-  echo "export ICON_REPORT='$ICON_REPORT'"
-  echo "export ICON_PASSED='$ICON_PASSED'"
-  echo "export ICON_FAILED='$ICON_FAILED'"
-  echo "export ICON_WARNING='$ICON_WARNING'"
-  echo "export ICON_CHECK='$ICON_CHECK'"
-  echo "export ICON_ARROW='$ICON_ARROW'"
-) >> $BASH_ENV
+  echo 'BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
+  echo 'BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
+  echo 'BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
+  echo "MULTIDEV_SITE_URL='https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "DEV_SITE_URL='https://dev-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "TEST_SITE_URL='https://test-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "LIVE_SITE_URL='$LIVE_SITE_URL'"
+  echo "PANTHEON_LIVE_SITE_URL='$PANTHEON_LIVE_SITE_URL'"
+  echo "ARTIFACTS_DIR='artifacts'"
+  echo "ARTIFACTS_FULL_DIR='/tmp/artifacts'"
+  echo "SHOULD_BUILD_JOB=$SHOULD_BUILD_JOB"
+  echo "CLONE_CONTENT=$CLONE_CONTENT"
+  echo "GITHUB_API_URL=$GITHUB_API_URL"
+  echo "LATEST_GIT_MSG='$LATEST_GIT_MSG'"
+  echo "BACKSTOP_REF_ENV='$BACKSTOP_REF_ENV'"
+  echo "BACKSTOP_TEST_ENV='$BACKSTOP_TEST_ENV'"
+  echo "ICON_REPORT='$ICON_REPORT'"
+  echo "ICON_PASSED='$ICON_PASSED'"
+  echo "ICON_FAILED='$ICON_FAILED'"
+  echo "ICON_WARNING='$ICON_WARNING'"
+  echo "ICON_CHECK='$ICON_CHECK'"
+  echo "ICON_ARROW='$ICON_ARROW'"
+) >> $GITHUB_ENV
+
+
 
 # If a Terminus machine token and site name are defined
 # if [[ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]]
@@ -210,11 +250,11 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 #   ) >> $BASH_ENV
 # fi
 
-source $BASH_ENV
+# source $BASH_ENV
 
-echo 'Contents of BASH_ENV:'
-cat $BASH_ENV
-echo
+# echo 'Contents of BASH_ENV:'
+# cat $BASH_ENV
+# echo
 
 echo -e "Copying Bash contents to file"
 cp $BASH_ENV  bash_env.txt
