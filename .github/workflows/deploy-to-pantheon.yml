@@ -65,6 +65,7 @@ jobs:
 
     # Pantheon Cleanup.
     - name: Prepare and clean up Pantheon
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/env/prepare-for-pantheon.sh
 
 
