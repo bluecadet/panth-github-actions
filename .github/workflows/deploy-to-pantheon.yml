@@ -58,6 +58,11 @@ jobs:
       with:
         pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
+    - run: echo $TMPDIR # works
+    - run: echo ${{ env.TMPDIR }} # does not work
+    - run: echo "TMPDIR=${TMPDIR}" >> $GITHUB_ENV # sets it into the GitHub Actions environment
+    - run: echo ${{ env.TMPDIR }} # works
+
     # Install Terminus Build Tools.
     - name: Install Terminus Build Tools
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}

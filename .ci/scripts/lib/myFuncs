@@ -60,10 +60,10 @@ persistBranchName() {
 
 deleteReleaseEnvs() {
 
-  echo -e ${TEMP_DIR}
+  echo -e $TEMP_DIR
 
   # Create folder to work in
-  GITDATA_FOLDER="${TEMP_DIR}/workspace/git_data"
+  GITDATA_FOLDER="$TEMP_DIR/workspace/git_data"
   mkdir -p GITDATA_FOLDER
 
   GIT_PR_DATA_FILE="${GITDATA_FOLDER}/git_repo_pulls.json"
