@@ -44,16 +44,6 @@ jobs:
 
     - uses: hmarr/debug-action@v2
 
-    - name: DEBUG1
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      uses: hmarr/debug-action@v2
-
-    - name: DEBUG2
-      if: ${{ env.SHOULD_BUILD_JOB == 'false' }}
-      uses: hmarr/debug-action@v2
-
-
-
 
     # Install Terminus.
     - name: Install Terminus
@@ -72,10 +62,10 @@ jobs:
 
 
 
-    - name: PWD
-      env:
-        pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
-      run: pwd
+    # - name: PWD
+    #   env:
+    #     pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
+    #   run: pwd
 
 
 
