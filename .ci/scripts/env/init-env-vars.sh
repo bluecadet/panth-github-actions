@@ -32,6 +32,7 @@ node ./.ci/scripts/env/init-env-vars.js
 # Circle sets both $CIRCLE_PULL_REQUEST and $CI_PULL_REQUEST.
 # PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
 # PR_NUMBER=${PR_NUMBER##*/}
+PR_NUMBER=$(gh pr view --json number -q .number || echo "")
 
 # Set up BASH_ENV if it was not set for us.
 # BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
