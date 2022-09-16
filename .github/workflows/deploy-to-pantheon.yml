@@ -34,6 +34,19 @@ jobs:
         config: ${{ secrets.SSH_CONFIG }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
+
+
+
+
+    # Initiate Env Variables.
+    - name: Setup Environment Vars
+      run: ./.ci/scripts/env/init-env-vars.sh
+
+    - uses: hmarr/debug-action@v2
+
+
+
+
     # Install Terminus.
     - name: Install Terminus
       uses: pantheon-systems/terminus-github-actions@main
@@ -80,16 +93,6 @@ jobs:
         npm install
         npm run out
         gulp build
-
-
-
-
-
-    - name: Setup Environment Vars
-      run: ./.ci/scripts/env/init-env-vars.sh
-
-    - uses: hmarr/debug-action@v2
-
 
 
     - name: pre-deployer
