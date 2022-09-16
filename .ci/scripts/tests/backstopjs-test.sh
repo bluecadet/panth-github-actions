@@ -109,6 +109,10 @@ echo
 cp $VR_BASH_ENV  ${TEMP_DIR}/workspace/vr_bash_env.txt
 
 
+
+
+
+
 # Post the image back to the pull request on GitHub
 # echo -e "\nPosting visual regression results back to PR #$PR_NUMBER "
 # curl -s -i -u "$CI_PROJECT_USERNAME:$GITHUB_TOKEN" -d "{\"body\": \"$PR_MESSAGE\"}" $GITHUB_API_URL/issues/$PR_NUMBER/comments > /dev/null
