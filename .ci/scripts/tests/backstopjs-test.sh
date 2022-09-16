@@ -3,11 +3,15 @@
 # Variables
 GITHUB_API_URL="https://api.github.com/repos/$CI_PROJECT_USERNAME/$CI_PROJECT_REPONAME"
 
+echo ${TEMP_DIR}
+
+mkdir -p = "${TEMP_DIR}/workspace"
+
 # Check if we are NOT on the master branch and this is a PR
 if [[ ${CI_BRANCH} != "master" && -z ${CI_PR_URL} ]];
 then
   echo -e "\nVisual regression tests will only run if we are not on the master branch and making a pull request"
-  touch /tmp/workspace/vr_bash_env.txt
+  touch ${TEMP_DIR}/workspace/vr_bash_env.txt
   exit 0;
 fi
 
@@ -102,7 +106,7 @@ echo 'Contents of BASH_ENV:'
 cat $VR_BASH_ENV
 echo
 
-cp $VR_BASH_ENV  /tmp/workspace/vr_bash_env.txt
+cp $VR_BASH_ENV  ${TEMP_DIR}/workspace/vr_bash_env.txt
 
 
 # Post the image back to the pull request on GitHub

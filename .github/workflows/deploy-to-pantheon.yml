@@ -47,7 +47,7 @@ jobs:
 
     # Install Terminus.
     - name: Install Terminus
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       uses: pantheon-systems/terminus-github-actions@main
       with:
         pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
@@ -57,7 +57,7 @@ jobs:
 
     # Install Terminus Build Tools.
     - name: Install Terminus Build Tools
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: terminus self:plugin:install terminus-build-tools-plugin
 
     # Pantheon Cleanup.
@@ -136,84 +136,11 @@ jobs:
 
 
 
-  # visual_regression_test:
-  #   container:
-  #     image: backstopjs/backstopjs:6.1.0
-  #     options: --user root
-  #   runs-on: ubuntu-latest
-  #   # if: ${{ github.ref != 'refs/heads/master' }}
-  #   # needs: [build]
-  #   steps:
 
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
-  #     with:
-  #       ref: ${{ github.head_ref || github.ref_name }}
-  #       fetch-depth: 0
 
-  #   # Initiate Env Variables.
-  #   - name: Setup Environment Vars
-  #     run: ./.ci/scripts/env/init-env-vars.sh
 
-  #   - uses: hmarr/debug-action@v2
 
-    # - name: Set bash_env env var
-    #   run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
 
-    # - name: Cache bash_env.txt
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: cache-bash-env
-    #   with:
-    #     path: ${{ env.BASH_ENV }}
-    #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-build-${{ env.cache-name }}-
-    #       ${{ runner.os }}-build-
-    #       ${{ runner.os }}-
-
-    # - name: Cache composer cache
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: cache-composer-cache
-    #   with:
-    #     path: ~/.composer/cache
-    #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-build-${{ env.cache-name }}-
-    #       ${{ runner.os }}-build-
-    #       ${{ runner.os }}-
-
-    # - name: Cache vendor folder
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: cache-vendor
-    #   with:
-    #     path: ./vendor
-    #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
-
-    # - name: Cache web folder
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: cache-web
-    #   with:
-    #     path: ./web
-    #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
-
-    # - name: Cache drush folder
-    #   uses: actions/cache@v2
-    #   env:
-    #     cache-name: cache-drush
-    #   with:
-    #     path: ./drush
-    #     key: ${{ runner.os }}-build-${{ env.cache-name }}
-
-    # - name: prepare-environment-vars
-    #   run: |
-    #     source $BASH_ENV
-
-    # - name: visual regression test
-    #   run: ./.ci/test/visual-regression/run
 
     - name: Install Backstopjs
       run: npm install -g backstopjs
