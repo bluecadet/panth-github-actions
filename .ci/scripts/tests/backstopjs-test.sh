@@ -75,38 +75,38 @@ if [ ! -f $DIFF_REPORT ]; then
 	exit 1
 fi
 
-DIFF_REPORT_URL="$CIRCLE_ARTIFACTS_URL/backstop_data/html_report/index.html"
+# DIFF_REPORT_URL="$CIRCLE_ARTIFACTS_URL/backstop_data/html_report/index.html"
 
 # REPORT_LINK="[![Visual report]($DIFF_IMAGE_URL)]($DIFF_REPORT_URL)"
-REPORT_LINK="[Visual Regression Report $ICON_ARROW]($DIFF_REPORT_URL)"
+# REPORT_LINK="[Visual Regression Report $ICON_ARROW]($DIFF_REPORT_URL)"
 
 
-VR_PR_MESSAGE="\n\n## $ICON_REPORT BackstopJS Reprt:\n"
+# VR_PR_MESSAGE="\n\n## $ICON_REPORT BackstopJS Reprt:\n"
 
-if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
-then
-	# visual regression failed
-	echo -e "\nVisual regression test failed!"
-	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**\n$REPORT_LINK"
-else
-	# visual regression passed
-	echo -e "\nVisual regression test passed!"
-	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**\n$REPORT_LINK"
-fi
+# if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
+# then
+# 	# visual regression failed
+# 	echo -e "\nVisual regression test failed!"
+# 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**\n$REPORT_LINK"
+# else
+# 	# visual regression passed
+# 	echo -e "\nVisual regression test passed!"
+# 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**\n$REPORT_LINK"
+# fi
 
-VR_PR_MESSAGE="$VR_PR_MESSAGE \n\n[CircleCI Job $CI_BUILD_NUMBER $ICON_ARROW]($CI_BUILD_URL)\n\n"
+# VR_PR_MESSAGE="$VR_PR_MESSAGE \n\n[CircleCI Job $CI_BUILD_NUMBER $ICON_ARROW]($CI_BUILD_URL)\n\n"
 
-# Set gloabl vars for this job.
-VR_BASH_ENV=${VR_BASH_ENV:-$HOME/.vrbashrc}
-(
-  echo "export VR_PR_MESSAGE='$VR_PR_MESSAGE'"
-) >> $VR_BASH_ENV
+# # Set gloabl vars for this job.
+# VR_BASH_ENV=${VR_BASH_ENV:-$HOME/.vrbashrc}
+# (
+#   echo "export VR_PR_MESSAGE='$VR_PR_MESSAGE'"
+# ) >> $VR_BASH_ENV
 
-echo 'Contents of BASH_ENV:'
-cat $VR_BASH_ENV
-echo
+# echo 'Contents of BASH_ENV:'
+# cat $VR_BASH_ENV
+# echo
 
-cp $VR_BASH_ENV  ${TEMP_DIR}/workspace/vr_bash_env.txt
+# cp $VR_BASH_ENV  ${TEMP_DIR}/workspace/vr_bash_env.txt
 
 
 
