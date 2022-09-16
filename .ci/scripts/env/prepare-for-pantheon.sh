@@ -24,14 +24,3 @@ deleteReleaseEnvs
 echo -e "Finished checking Release environments\n"
 
 
-
-if [[ ${CI_BRANCH} == "master" ]] || [[ ${CI_BRANCH} == ${DEFAULT_BRANCH} ]];
-then
-  echo -e "\nRunning composer build-assets to get production assets assets.\n"
-  composer -n build-assets
-else
-  echo -e "\nRunning composer install to get all assets.\n"
-  composer -n install
-fi
-
-echo -e "Finished composer install\n"
