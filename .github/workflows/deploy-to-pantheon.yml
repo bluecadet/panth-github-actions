@@ -29,7 +29,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
       with:
-        ref: ${{ env.GITHUB_REF }}
+        ref: ${{ github.head_ref || github.ref_name }}
 
     - uses: shimataro/ssh-key-action@v2
       with:
