@@ -4,7 +4,7 @@ set -eo pipefail
 # include common funcs
 . ./.ci/scripts/lib/myFuncs
 
-printenv
+# printenv
 
 node ./.ci/scripts/env/init-env-vars.js
 
@@ -255,29 +255,29 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 # cat $BASH_ENV
 # echo
 
-echo -e "Copying Bash contents to file"
-cp $BASH_ENV  bash_env.txt
+# echo -e "Copying Bash contents to file"
+# cp $BASH_ENV  bash_env.txt
 
 # Avoid ssh prompting when connecting to new ssh hosts
-mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+# mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
 
 # Configure the GitHub Oauth token if it is available
-if [ -n "$GITHUB_TOKEN" ]; then
-  composer -n config --global github-oauth.github.com $GITHUB_TOKEN
-fi
+# if [ -n "$GITHUB_TOKEN" ]; then
+#   composer -n config --global github-oauth.github.com $GITHUB_TOKEN
+# fi
 
 # Set up our default git config settings if git is available.
-git config --global user.email "${GIT_EMAIL:-no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com}"
-git config --global user.name "CI Bot"
-git config --global core.fileMode false
+# git config --global user.email "${GIT_EMAIL:-no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com}"
+# git config --global user.name "CI Bot"
+# git config --global core.fileMode false
 
-echo ${GITHUB_TOKEN}
-echo ${GIT_EMAIL}
+# echo ${GITHUB_TOKEN}
+# echo ${GIT_EMAIL}
 
 # Re-install the Terminus Build Tools plugin if requested
-if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
-  echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION."
-  echo "Note that it is NOT RECOMMENDED to define BUILD_TOOLS_VERSION, save in the Terminus Build Tools plugin tests themselves. All other tests should use the version bundled with the container."
-  rm -rf ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins}/terminus-build-tools-plugin
-  composer -n create-project --no-dev -d ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins} pantheon-systems/terminus-build-tools-plugin:$BUILD_TOOLS_VERSION
-fi
+# if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
+#   echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION."
+#   echo "Note that it is NOT RECOMMENDED to define BUILD_TOOLS_VERSION, save in the Terminus Build Tools plugin tests themselves. All other tests should use the version bundled with the container."
+#   rm -rf ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins}/terminus-build-tools-plugin
+#   composer -n create-project --no-dev -d ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins} pantheon-systems/terminus-build-tools-plugin:$BUILD_TOOLS_VERSION
+# fi
