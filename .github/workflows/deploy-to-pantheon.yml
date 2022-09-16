@@ -136,26 +136,26 @@ jobs:
 
 
 
-  visual_regression_test:
-    container:
-      image: backstopjs/backstopjs:6.1.0
-      options: --user root
-    runs-on: ubuntu-latest
-    # if: ${{ github.ref != 'refs/heads/master' }}
-    # needs: [build]
-    steps:
+  # visual_regression_test:
+  #   container:
+  #     image: backstopjs/backstopjs:6.1.0
+  #     options: --user root
+  #   runs-on: ubuntu-latest
+  #   # if: ${{ github.ref != 'refs/heads/master' }}
+  #   # needs: [build]
+  #   steps:
 
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref || github.ref_name }}
-        fetch-depth: 0
+  #   - name: Checkout
+  #     uses: actions/checkout@v2
+  #     with:
+  #       ref: ${{ github.head_ref || github.ref_name }}
+  #       fetch-depth: 0
 
-    # Initiate Env Variables.
-    - name: Setup Environment Vars
-      run: ./.ci/scripts/env/init-env-vars.sh
+  #   # Initiate Env Variables.
+  #   - name: Setup Environment Vars
+  #     run: ./.ci/scripts/env/init-env-vars.sh
 
-    - uses: hmarr/debug-action@v2
+  #   - uses: hmarr/debug-action@v2
 
     # - name: Set bash_env env var
     #   run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
@@ -214,6 +214,9 @@ jobs:
 
     # - name: visual regression test
     #   run: ./.ci/test/visual-regression/run
+
+    - name:
+      run: npm install -g backstopjs
 
     - name: Create File
       run: |
