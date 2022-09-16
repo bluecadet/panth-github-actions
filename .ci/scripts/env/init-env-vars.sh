@@ -34,7 +34,7 @@ node ./.ci/scripts/env/init-env-vars.js
 # PR_NUMBER=${PR_NUMBER##*/}
 
 # Set up BASH_ENV if it was not set for us.
-BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
+# BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
 
 # Provide a default email address
 GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
@@ -195,7 +195,7 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 # ) >> $BASH_ENV
 
 (
-  echo 'PATH=$PATH:$HOME/bin'
+  # echo 'PATH=$PATH:$HOME/bin'
   echo "PR_NUMBER=$PR_NUMBER"
   echo "CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
   echo "DEFAULT_SITE='$DEFAULT_SITE'"
