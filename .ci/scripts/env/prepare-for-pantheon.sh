@@ -5,7 +5,6 @@ set -eo pipefail
 # include common funcs
 . ./.ci/scripts/lib/myFuncs
 
-
 echo "Prepring build for $TERMINUS_ENV. Pantheon test environment is $TERMINUS_SITE.$TERMINUS_ENV\n"
 
 # Report installed version of Terminus
@@ -19,12 +18,6 @@ echo -e "Finished checking CI environments\n"
 terminus -n build:env:delete:pr "$TERMINUS_SITE" --yes
 echo -e "Finished checking PR environments\n"
 
-
-echo -e "START checking Release environments\n"
-echo -e $TEMP_DIR
-
 # Delete leftover REL environments
 deleteReleaseEnvs
 echo -e "Finished checking Release environments\n"
-
-
