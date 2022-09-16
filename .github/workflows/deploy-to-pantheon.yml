@@ -37,13 +37,6 @@ jobs:
         config: ${{ secrets.SSH_CONFIG }}
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
-    # - name: Get Pull Request Number
-    #   id: pr
-    #   run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
-
-    # - name: PR number
-    #   run: echo ${{ steps.pr.outputs.pull_request_number }}
-
     # Initiate Env Variables.
     - name: Setup Environment Vars
       run: ./.ci/scripts/env/init-env-vars.sh
@@ -75,10 +68,8 @@ jobs:
 
 
 
-    # - name: PWD
-    #   env:
-    #     pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
-    #   run: pwd
+    - name: PWD
+      run: pwd
 
 
 
