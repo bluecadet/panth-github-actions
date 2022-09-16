@@ -56,6 +56,10 @@ jobs:
     - run: echo "TMPDIR=${TMPDIR}" >> $GITHUB_ENV # sets it into the GitHub Actions environment
     - run: echo ${{ env.TMPDIR }} # works
 
+    - name: PWD
+      run: pwd
+
+
     # Install Terminus Build Tools.
     - name: Install Terminus Build Tools
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
@@ -65,11 +69,6 @@ jobs:
     - name: Prepare and clean up Pantheon
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/env/prepare-for-pantheon.sh
-
-
-
-    - name: PWD
-      run: pwd
 
 
 
