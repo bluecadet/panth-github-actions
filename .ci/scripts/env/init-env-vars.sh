@@ -207,16 +207,11 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
   echo "TERMINUS_ENV=$TERMINUS_ENV"
   echo "DEFAULT_BRANCH=$DEFAULT_BRANCH"
   # TODO: Reconcile with environment variables set by build:project:create
-  echo 'BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
-  echo 'BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
-  echo 'BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
   echo "MULTIDEV_SITE_URL=https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/"
   echo "DEV_SITE_URL=https://dev-$TERMINUS_SITE.pantheonsite.io/"
   echo "TEST_SITE_URL=https://test-$TERMINUS_SITE.pantheonsite.io/"
   echo "LIVE_SITE_URL=$LIVE_SITE_URL"
   echo "PANTHEON_LIVE_SITE_URL=$PANTHEON_LIVE_SITE_URL"
-  echo "ARTIFACTS_DIR=artifacts"
-  echo "ARTIFACTS_FULL_DIR=/tmp/artifacts"
   echo "SHOULD_BUILD_JOB=$SHOULD_BUILD_JOB"
   echo "CLONE_CONTENT=$CLONE_CONTENT"
   echo "GITHUB_API_URL=$GITHUB_API_URL"
