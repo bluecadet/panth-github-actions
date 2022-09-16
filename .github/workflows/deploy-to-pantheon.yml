@@ -50,6 +50,10 @@ jobs:
 
     - uses: hmarr/debug-action@v2
 
+    # Pantheon Cleanup.
+    - name: Prepare and clean up Pantheon
+      run: ./.ci/scripts/env/prepare-for-pantheon.sh
+
 
     # Install Terminus.
     - name: Install Terminus
