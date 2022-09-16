@@ -33,6 +33,7 @@ node ./.ci/scripts/env/init-env-vars.js
 # PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
 # PR_NUMBER=${PR_NUMBER##*/}
 PR_NUMBER=$(gh pr view --json number -q .number || echo "")
+CI_PR_URL=$(gh pr view --json url -q .url || echo "")
 
 # Set up BASH_ENV if it was not set for us.
 # BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
@@ -114,7 +115,7 @@ else
 fi
 
 # Set some CI env vars.
-CI_PR_URL=${CI_PR_URL:-$CIRCLE_PULL_REQUEST}
+# CI_PR_URL=${CI_PR_URL:-$CIRCLE_PULL_REQUEST}
 CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}

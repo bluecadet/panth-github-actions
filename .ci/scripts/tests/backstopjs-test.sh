@@ -8,7 +8,7 @@ echo ${TEMP_DIR}
 mkdir -p = "${TEMP_DIR}/workspace"
 
 # Check if we are NOT on the master branch and this is a PR
-if [[ ${CI_BRANCH} != "master" && -z ${CI_PR_URL} ]];
+if [[ ${CI_BRANCH} != "master" && -z ${PR_NUMBER} ]];
 then
   echo -e "\nVisual regression tests will only run if we are not on the master branch and making a pull request"
   touch ${TEMP_DIR}/workspace/vr_bash_env.txt
