@@ -142,8 +142,8 @@ jobs:
 
 
 
-    - name: Install Backstopjs
-      run: npm install -g backstopjs
+    - name: Install Backstopjs and Puppeteer
+      run: npm install -g backstopjs puppeteer
 
     # If we need to login, set urls.
     - name: Setup authorization urls
@@ -151,3 +151,21 @@ jobs:
 
     - name: visual regression test
       run: ./.ci/scripts/tests/backstopjs-test.sh
+
+
+
+
+
+
+    # - name: Create File
+    #   run: |
+    #     mkdir -p /tmp/artifacts
+    #     touch /tmp/artifacts/bob.txt
+    #     echo "Hello Bob" >> /tmp/artifacts/bob.txt
+
+    # - name: Upload artifacts
+    #   if: ${{ always() }}
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: vrt-report
+    #     path: /tmp/artifacts
