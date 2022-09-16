@@ -64,7 +64,7 @@ deleteReleaseEnvs() {
 
   # Create folder to work in
   GITDATA_FOLDER="$TEMP_DIR/workspace/git_data"
-  mkdir -p -v GITDATA_FOLDER
+  mkdir -p -v "${GITDATA_FOLDER}"
 
   GIT_PR_DATA_FILE="${GITDATA_FOLDER}/git_repo_pulls.json"
   touch ${GIT_PR_DATA_FILE}
