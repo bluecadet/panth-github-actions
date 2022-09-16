@@ -113,6 +113,8 @@ jobs:
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/env/deploy-to-pantheon.sh
 
+    # - name: Wait for Pantheon to fully sync code
+    #   run: terminus workflow:wait panth-github-actions.dev --max=6000
 
 
 
@@ -130,3 +132,90 @@ jobs:
     #     git add .
     #     git commit -q -m 'Build assets for dev.'
     #     git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
+
+
+
+
+  visual_regression_test:
+    container:
+      image: backstopjs/backstopjs:6.1.0
+      options: --user root
+    runs-on: ubuntu-latest
+    # if: ${{ github.ref != 'refs/heads/master' }}
+    # needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+
+      # - name: Set bash_env env var
+      #   run: echo BASH_ENV=${RUNNER_TEMP}/bash_env.txt >> $GITHUB_ENV
+
+      # - name: Cache bash_env.txt
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-bash-env
+      #   with:
+      #     path: ${{ env.BASH_ENV }}
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
+
+      # - name: Cache composer cache
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-composer-cache
+      #   with:
+      #     path: ~/.composer/cache
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
+
+      # - name: Cache vendor folder
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-vendor
+      #   with:
+      #     path: ./vendor
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+
+      # - name: Cache web folder
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-web
+      #   with:
+      #     path: ./web
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_number }}
+
+      # - name: Cache drush folder
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-drush
+      #   with:
+      #     path: ./drush
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}
+
+      # - name: prepare-environment-vars
+      #   run: |
+      #     source $BASH_ENV
+
+      # - name: visual regression test
+      #   run: ./.ci/test/visual-regression/run
+
+      - name: Create File
+        run: |
+          touch /tmp/artifacts/bob.txt
+          echo "Hello Bob" >> /tmp/artifacts/bob.txt
+
+      - name: Upload artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: vrt-report
+          path: /tmp/artifacts
