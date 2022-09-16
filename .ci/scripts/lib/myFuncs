@@ -72,7 +72,7 @@ deleteReleaseEnvs() {
   echo -e ${GIT_PR_DATA_FILE}
 
   # grab github pr data and names
-  GITHUB_REPO_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls"
+  GITHUB_REPO_URL="https://api.github.com/repos/$CI_PROJECT_NAME/pulls"
 
   curl -s -H "Authorization: token ${GITHUB_TOKEN}" ${GITHUB_REPO_URL} > ${GIT_PR_DATA_FILE}
 
