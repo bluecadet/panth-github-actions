@@ -3,6 +3,7 @@ on: push
 env:
   TZ: "/usr/share/zoneinfo/America/New_York"
   TERM: dumb
+  TEMP_DIR: "../"
   CMS_PLATFORM: D9
   ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
   ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
@@ -51,14 +52,8 @@ jobs:
       with:
         pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
-    - run: echo $TMPDIR # works
-    - run: echo ${{ env.TMPDIR }} # does not work
-    - run: echo "TMPDIR=${TMPDIR}" >> $GITHUB_ENV # sets it into the GitHub Actions environment
-    - run: echo ${{ env.TMPDIR }} # works
-
     - name: PWD
       run: pwd
-
 
     # Install Terminus Build Tools.
     - name: Install Terminus Build Tools
