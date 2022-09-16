@@ -43,11 +43,11 @@ jobs:
       run: ./.ci/scripts/env/init-env-vars.sh
 
     - name: DEBUG1
-      if: ${{ SHOULD_BUILD_JOB }}
+      if: ${{ env.SHOULD_BUILD_JOB }}
       uses: hmarr/debug-action@v2
 
     - name: DEBUG2
-      if: ${{ !SHOULD_BUILD_JOB }}
+      if: ${{ !env.SHOULD_BUILD_JOB }}
       uses: hmarr/debug-action@v2
 
 
