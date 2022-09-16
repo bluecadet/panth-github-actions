@@ -3,6 +3,7 @@ on: push
 env:
   TZ: "/usr/share/zoneinfo/America/New_York"
   TERM: dumb
+  CMS_PLATFORM: D9
   ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
   ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
   ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
@@ -39,10 +40,24 @@ jobs:
       with:
         pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
+    # Install Terminus Build Tools.
     - name: Install Terminus Build Tools
       run: terminus self:plugin:install terminus-build-tools-plugin
 
-    # Check Terminus works.
+
+
+
+
+
+    - name: PWD
+      env:
+        pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
+      run: pwd
+
+
+
+
+
     - name: Update Ignore File.
       run: terminus build:gitignore:cut
 
@@ -66,15 +81,9 @@ jobs:
         npm run out
         gulp build
 
-    - uses: hmarr/debug-action@v2
 
 
 
-
-
-
-    - name: Setup Environment Vars (TEST)
-      run: ./.ci/scripts/env/test.sh
 
     - name: Setup Environment Vars
       run: ./.ci/scripts/env/init-env-vars.sh
@@ -83,9 +92,7 @@ jobs:
 
 
 
-
-
-    - name: deployer
+    - name: pre-deployer
       env:
         pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
       run: |
@@ -95,6 +102,24 @@ jobs:
         git config user.name "Bluecadet Bot"
         git rm `cat .gitignore-panth | sed 's/^\///g'`
         cat .gitignore-panth >> .gitignore
-        git add .
-        git commit -q -m 'Build assets for dev.'
-        git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
+
+    - name: deployer
+      run: ./.ci/scripts/env/deploy-to-pantheon.sh
+
+
+
+
+
+    # - name: pre-deployer
+    #   env:
+    #     pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
+    #   run: |
+    #     BASE_BRANCH=${GITHUB_REF##*/}
+    #     git remote add pantheon $pantheon_repo
+    #     git config user.mail "bc-bot@bluecadet.com"
+    #     git config user.name "Bluecadet Bot"
+    #     git rm `cat .gitignore-panth | sed 's/^\///g'`
+    #     cat .gitignore-panth >> .gitignore
+    #     git add .
+    #     git commit -q -m 'Build assets for dev.'
+    #     git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
