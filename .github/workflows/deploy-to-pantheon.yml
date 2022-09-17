@@ -79,6 +79,8 @@ jobs:
       with:
         node-version: 14.19.0
 
+    - run: npm list -g --depth 0
+
     # Cache vendor folder
     - name: Cache vendor folder
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}

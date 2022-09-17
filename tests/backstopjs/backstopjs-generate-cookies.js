@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-console.log(env.NODE_PATH);
+console.log(process.env);
+console.log(process.env.NODE_PATH);
 
 const puppeteer = require('puppeteer');
 const fsx = require('fs-extra');
