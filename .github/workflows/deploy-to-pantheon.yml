@@ -52,8 +52,8 @@ jobs:
     #   with:
     #     pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
-    # - name: PWD
-    #   run: pwd
+    - name: PWD
+      run: pwd
 
     # # Install Terminus Build Tools.
     # - name: Install Terminus Build Tools
@@ -171,4 +171,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: vrt-report
-        path: ../artifacts
+        path: /home/runner/work/panth-github-actions/artifacts
