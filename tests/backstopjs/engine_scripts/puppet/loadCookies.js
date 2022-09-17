@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 
 module.exports = async (page, scenario, vp, isReference, Engine) => {
