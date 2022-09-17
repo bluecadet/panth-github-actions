@@ -62,7 +62,7 @@ jobs:
 
     # Pantheon Cleanup.
     - name: Prepare and clean up Pantheon
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/env/prepare-for-pantheon.sh
 
 
@@ -143,7 +143,7 @@ jobs:
 
 
     - name: Install Backstopjs and Puppeteer
-      run: npm install -g backstopjs puppeteer
+      run: npm install backstopjs puppeteer
 
     # If we need to login, set urls.
     - name: Setup authorization urls
