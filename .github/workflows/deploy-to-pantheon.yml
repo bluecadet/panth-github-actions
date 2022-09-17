@@ -79,7 +79,8 @@ jobs:
       with:
         node-version: 14.19.0
 
-    - run: npm list -g --depth 0
+    - name: DEBUG npm global
+      run: npm list -g --depth 0
 
     # Cache vendor folder
     - name: Cache vendor folder
@@ -145,7 +146,7 @@ jobs:
 
 
     - name: Install Backstopjs and Puppeteer
-      run: npm install -g backstopjs puppeteer minimist
+      run: npm install backstopjs puppeteer minimist
 
     # If we need to login, set urls.
     - name: Setup authorization urls
