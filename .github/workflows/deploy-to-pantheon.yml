@@ -46,72 +46,72 @@ jobs:
 
 
     # Install Terminus.
-    - name: Install Terminus
-      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      uses: pantheon-systems/terminus-github-actions@main
-      with:
-        pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
+    # - name: Install Terminus
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   uses: pantheon-systems/terminus-github-actions@main
+    #   with:
+    #     pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
-    - name: PWD
-      run: pwd
+    # - name: PWD
+    #   run: pwd
 
-    # Install Terminus Build Tools.
-    - name: Install Terminus Build Tools
-      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      run: terminus self:plugin:install terminus-build-tools-plugin
+    # # Install Terminus Build Tools.
+    # - name: Install Terminus Build Tools
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   run: terminus self:plugin:install terminus-build-tools-plugin
 
-    # Pantheon Cleanup.
-    - name: Prepare and clean up Pantheon
-      # if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      run: ./.ci/scripts/env/prepare-for-pantheon.sh
-
-
+    # # Pantheon Cleanup.
+    # - name: Prepare and clean up Pantheon
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   run: ./.ci/scripts/env/prepare-for-pantheon.sh
 
 
 
-    - name: Update Ignore File.
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      run: terminus build:gitignore:cut
-
-    - name: Use Node.js 14.
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14.19.0
-
-    # Cache vendor folder
-    - name: Cache vendor folder
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-vendor
-      with:
-        path: ./vendor
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
-
-    - name: node builder
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      run: |
-        npm install
-        npm run out
-        gulp build
 
 
-    - name: pre-deployer
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      env:
-        pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
-      run: |
-        BASE_BRANCH=${GITHUB_REF##*/}
-        git remote add pantheon $pantheon_repo
-        git config user.mail "bc-bot@bluecadet.com"
-        git config user.name "Bluecadet Bot"
-        git rm `cat .gitignore-panth | sed 's/^\///g'`
-        cat .gitignore-panth >> .gitignore
+    # - name: Update Ignore File.
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   run: terminus build:gitignore:cut
 
-    - name: deployer
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
-      run: ./.ci/scripts/env/deploy-to-pantheon.sh
+    # - name: Use Node.js 14.
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: 14.19.0
+
+    # # Cache vendor folder
+    # - name: Cache vendor folder
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   uses: actions/cache@v2
+    #   env:
+    #     cache-name: cache-vendor
+    #   with:
+    #     path: ./vendor
+    #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+
+    # - name: node builder
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   run: |
+    #     npm install
+    #     npm run out
+    #     gulp build
+
+
+    # - name: pre-deployer
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   env:
+    #     pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
+    #   run: |
+    #     BASE_BRANCH=${GITHUB_REF##*/}
+    #     git remote add pantheon $pantheon_repo
+    #     git config user.mail "bc-bot@bluecadet.com"
+    #     git config user.name "Bluecadet Bot"
+    #     git rm `cat .gitignore-panth | sed 's/^\///g'`
+    #     cat .gitignore-panth >> .gitignore
+
+    # - name: deployer
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+    #   run: ./.ci/scripts/env/deploy-to-pantheon.sh
 
     # - name: Wait for Pantheon to fully sync code
     #   run: terminus workflow:wait panth-github-actions.dev --max=6000

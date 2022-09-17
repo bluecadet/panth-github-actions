@@ -4,6 +4,7 @@
 GITHUB_API_URL="https://api.github.com/repos/$CI_PROJECT_USERNAME/$CI_PROJECT_REPONAME"
 
 echo ${TEMP_DIR}
+echo ${ARTIFACTS_FULL_DIR}
 
 mkdir -p = "${TEMP_DIR}/workspace"
 
