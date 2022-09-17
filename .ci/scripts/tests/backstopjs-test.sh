@@ -40,14 +40,14 @@ fi
 
 # Backstop visual regression
 echo -e "\nRunning backstop reference on ${DEV_SITE_URL}..."
-backstop reference --config=./tests/backstopjs/backstop.json
+./node_modules/bin/backstop reference --config=./tests/backstopjs/backstop.json
 
 # Kill any zombie Chrome instances
 pkill -f "(chrome)?(--headless)"
 
 # Backstop test
 echo -e "\nRunning backstop test on ${MULTIDEV_SITE_URL}..."
-VISUAL_REGRESSION_RESULTS=$(backstop test --config=./tests/backstopjs/backstop.json || echo 'true')
+VISUAL_REGRESSION_RESULTS=$(./node_modules/bin/backstop test --config=./tests/backstopjs/backstop.json || echo 'true')
 
 echo "${VISUAL_REGRESSION_RESULTS}"
 
