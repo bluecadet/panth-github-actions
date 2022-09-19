@@ -11,6 +11,7 @@ echo $UUID
 echo $ENV
 echo $TIMESTAMP
 
+mkdir ../to-be-copied
 mkdir ../to-be-copied/$TIMESTAMP
 cp -R ../artifacts ../to-be-copied/$TIMESTAMP
 

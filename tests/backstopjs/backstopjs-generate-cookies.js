@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 
-console.log(process.env);
-console.log(process.env.NODE_PATH);
-
 const puppeteer = require('puppeteer');
 const fsx = require('fs-extra');
 const loginUrls = require("./login_urls.json");
