@@ -3,9 +3,6 @@
 # Variables
 GITHUB_API_URL="https://api.github.com/repos/$CI_PROJECT_USERNAME/$CI_PROJECT_REPONAME"
 
-echo ${TEMP_DIR}
-echo ${ARTIFACTS_FULL_DIR}
-
 mkdir -p = "${TEMP_DIR}/workspace"
 
 # Check if we are NOT on the master branch and this is a PR
@@ -55,6 +52,8 @@ echo "${VISUAL_REGRESSION_RESULTS}"
 if [ ! -d "$ARTIFACTS_FULL_DIR" ]; then
   mkdir -p $ARTIFACTS_FULL_DIR
 fi
+
+cp ./tests/backstopjs/backstop.json backstop_data
 
 # Copy backstop_data files to ARTIFACTS_FULL_DIR
 echo -e "\nCopying backstop_data files to $ARTIFACTS_FULL_DIR..."
