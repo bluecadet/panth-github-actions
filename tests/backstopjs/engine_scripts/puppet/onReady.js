@@ -24,5 +24,5 @@ module.exports = async (page, scenario, vp, isReference, Engine) => {
     });
   }
 
-  await page.waitFor(3000);
+  // await page.waitFor(3000);
 };
