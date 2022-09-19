@@ -9,7 +9,14 @@ TIMESTAMP=`date "+%Y%m%d-%H%M%S"`
 
 echo $UUID
 echo $ENV
-echo $TIMESTAMP
+echo $CONNECT_BC_API
+echo $PROJECT
+echo $BRANCH
+# echo $TIMESTAMP
+
+
+curl -H "api-key: $CONNECT_BC_API" -d '{"project":"$PROJECT", "branch":"$BRANCH"}' -H "Content-Type: application/json" -X POST https://live-connect-bluecadet.pantheonsite.io/api/vis-reg-result
+
 
 mkdir ../to-be-copied
 mkdir ../to-be-copied/$TIMESTAMP
