@@ -167,8 +167,11 @@ jobs:
     #     echo "Hello Bob" >> /tmp/artifacts/bob.txt
 
     - name: Upload artifacts
-      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: vrt-report
         path: /home/runner/work/panth-github-actions/artifacts
+
+    - name: Post Artifacts
+      if: ${{ always() }}
+      run: ./.ci/scripts/env/copy-to-bc-connect.sh
