@@ -4,7 +4,6 @@ env:
   TZ: "/usr/share/zoneinfo/America/New_York"
   TEMP_DIR: "../"
   CMS_PLATFORM: D9
-  NODE_VERSION: 14.19.0
   TERM: dumb
   ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
   ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
@@ -74,14 +73,11 @@ jobs:
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: terminus build:gitignore:cut
 
-    - name: Use Node.js 14.
+    - name: Use Node.js with proper version.
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ env.NODE_VERSION }}
-
-    - name: DEBUG npm global
-      run: npm list -g --depth 0
+        node-version-file: '.nvmrc'
 
     # Cache vendor folder
     - name: Cache vendor folder
@@ -120,54 +116,28 @@ jobs:
     # - name: Wait for Pantheon to fully sync code
     #   run: terminus workflow:wait panth-github-actions.dev --max=6000
 
-
-
-
-    # - name: pre-deployer
-    #   env:
-    #     pantheon_repo: '${{ secrets.PANTHEON_REPO }}'
-    #   run: |
-    #     BASE_BRANCH=${GITHUB_REF##*/}
-    #     git remote add pantheon $pantheon_repo
-    #     git config user.mail "bc-bot@bluecadet.com"
-    #     git config user.name "Bluecadet Bot"
-    #     git rm `cat .gitignore-panth | sed 's/^\///g'`
-    #     cat .gitignore-panth >> .gitignore
-    #     git add .
-    #     git commit -q -m 'Build assets for dev.'
-    #     git push --force pantheon HEAD:refs/heads/$BASE_BRANCH
-
-
-
-
-
-
-
-
-
-
     - name: Install Backstopjs and Puppeteer
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: npm install backstopjs puppeteer minimist
 
     # If we need to login, set urls.
     - name: Setup authorization urls
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/tests/backstopjs-auth-url.sh
 
-    - name: visual regression test
+    - name: Visual regression test
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/tests/backstopjs-test.sh
 
-
-
-
-
     - name: Upload artifacts
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       uses: actions/upload-artifact@v2
       with:
         name: vrt-report
         path: /home/runner/work/panth-github-actions/artifacts
 
     - name: Post Artifacts
-      if: ${{ always() }}
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       env:
         CONNECT_BC_API: '${{ secrets.CONNECT_BC_KEY }}'
         PROJECT: '${{ env.TERMINUS_SITE }}'
