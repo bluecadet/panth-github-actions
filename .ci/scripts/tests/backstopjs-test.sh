@@ -84,6 +84,7 @@ fi
 VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:<br><br>"
 echo "## $ICON_REPORT BackstopJS Report:" >> message.md
 echo "" >> message.md
+echo "" >> message.md
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
