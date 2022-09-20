@@ -81,7 +81,7 @@ fi
 # REPORT_LINK="[Visual Regression Report $ICON_ARROW]($DIFF_REPORT_URL)"
 
 
-VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:\r\n<br>\n\n"
+VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:<br>\r\n<br>\n\n<br>"
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
@@ -115,6 +115,7 @@ echo $VR_PR_MESSAGE
   echo "VR_PR_MESSAGE=$VR_PR_MESSAGE"
 ) >> $GITHUB_ENV
 
+echo "$CONTENT_ENV" > message.md
 
 # Post the image back to the pull request on GitHub
 # echo -e "\nPosting visual regression results back to PR #$PR_NUMBER "
