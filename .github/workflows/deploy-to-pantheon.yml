@@ -143,4 +143,5 @@ jobs:
       uses: thollander/actions-comment-pull-request@v1
       with:
         message: ${{ env.VR_PR_MESSAGE }}
+        pr_number: ${{ env.PR_NUMBER }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
