@@ -81,7 +81,7 @@ fi
 # REPORT_LINK="[Visual Regression Report $ICON_ARROW]($DIFF_REPORT_URL)"
 
 
-VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Reprt:<br>"
+VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:\r\n<br>\n\n"
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
