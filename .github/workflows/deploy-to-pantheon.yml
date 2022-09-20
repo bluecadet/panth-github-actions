@@ -153,3 +153,9 @@ jobs:
         message: ${{ cat message.md }}
         pr_number: ${{ env.PR_NUMBER }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Comment PR 2
+      env:
+        msg: ${{ env.VR_PR_MESSAGE }}
+      run: gh pr comment ${{ env.PR_NUMBER }} --body $msg
+
