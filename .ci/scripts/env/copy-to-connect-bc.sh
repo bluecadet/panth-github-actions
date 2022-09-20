@@ -20,7 +20,9 @@ cd ../to-be-copied
 rsync -raRLvz --relative --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' . --temp-dir=~/tmp/ $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files/vis-reg-reports
 
 
-cd ${PWD}
+echo $PWD
+
+cd "$PWD"
 
 VR_PR_LINK="[VR Report](https://live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/$TIMESTAMP/artifacts/backstop_data/html_report/index.html)"
 
