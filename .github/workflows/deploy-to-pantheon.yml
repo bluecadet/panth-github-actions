@@ -146,13 +146,13 @@ jobs:
         pr_number: ${{ env.PR_NUMBER }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Comment PR 2
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
-      uses: thollander/actions-comment-pull-request@v1
-      with:
-        message: ${{ cat message.md }}
-        pr_number: ${{ env.PR_NUMBER }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Comment PR 2
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
+    #   uses: thollander/actions-comment-pull-request@v1
+    #   with:
+    #     message: ${{ cat message.md }}
+    #     pr_number: ${{ env.PR_NUMBER }}
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Comment PR 2
       env:
