@@ -157,5 +157,5 @@ jobs:
     - name: Comment PR 2
       env:
         msg: ${{ env.VR_PR_MESSAGE }}
-      run: gh pr comment ${{ env.PR_NUMBER }} --body $msg
+      run: gh pr comment ${{ env.PR_NUMBER }} --body "$msg"
 
