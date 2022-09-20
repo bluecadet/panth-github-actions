@@ -19,7 +19,6 @@ env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   GITHUB_OWNER: ${{ github.repository_owner }}
   CI_PROJECT_NAME: ${{ github.repository }}
-  # PR_NUMBER: ${{ github.event.number }} # need to use gh cli
   CI_PULL_REQUEST: ${{ github.event.pull_request._links.html.href }}
   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 
@@ -42,8 +41,8 @@ jobs:
     - name: Setup Environment Vars
       run: ./.ci/scripts/env/init-env-vars.sh
 
-    - uses: hmarr/debug-action@v2
-
+    # Debugger
+    # - uses: hmarr/debug-action@v2
 
     # Install Terminus.
     - name: Install Terminus
@@ -64,10 +63,6 @@ jobs:
     - name: Prepare and clean up Pantheon
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
       run: ./.ci/scripts/env/prepare-for-pantheon.sh
-
-
-
-
 
     - name: Update Ignore File.
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
@@ -95,7 +90,6 @@ jobs:
         npm install
         npm run out
         gulp build
-
 
     - name: pre-deployer
       if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
@@ -143,3 +137,10 @@ jobs:
         PROJECT: '${{ env.TERMINUS_SITE }}'
         BRANCH: '${{ env.GITHUB_REF_NAME }}'
       run: ./.ci/scripts/env/copy-to-connect-bc.sh
+
+    - name: Comment PR
+      if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: ${{ env.VR_PR_MESSAGE }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
