@@ -90,13 +90,13 @@ then
 	# visual regression failed
 	echo -e "\nVisual regression test failed!"
 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**"
-	echo "$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**" >> message.md
+	echo "$ICON_FAILED **Visual regression test failed!**" >> message.md
 	echo "" >> message.md
 else
 	# visual regression passed
 	echo -e "\nVisual regression test passed!"
 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**"
-	echo "$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**" >> message.md
+	echo "$ICON_PASSED **Visual regression test passed!**" >> message.md
 	echo "" >> message.md
 fi
 
