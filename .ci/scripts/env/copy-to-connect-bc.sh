@@ -18,6 +18,7 @@ rsync -raRLvz --relative --size-only --checksum --ipv4 --progress -e 'ssh -p 222
 
 VR_PR_LINK="[VR Report](https://live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/$TIMESTAMP/artifacts/backstop_data/html_report/index.html)"
 echo $VR_PR_LINK
+echo $VR_PR_LINK >> message.md
 
 VR_PR_MESSAGE="$VR_PR_MESSAGE<br><br>$VR_PR_LINK"
 

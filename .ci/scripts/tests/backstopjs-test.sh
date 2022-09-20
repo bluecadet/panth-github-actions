@@ -81,17 +81,23 @@ fi
 # REPORT_LINK="[Visual Regression Report $ICON_ARROW]($DIFF_REPORT_URL)"
 
 
-VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:<br>\r\n<br>\n\n<br>"
+VR_PR_MESSAGE="## $ICON_REPORT BackstopJS Report:<br><br>"
+echo "## $ICON_REPORT BackstopJS Report:" >> message.md
+echo "" >> message.md
 
 if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
 then
 	# visual regression failed
 	echo -e "\nVisual regression test failed!"
 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**"
+	echo "$VR_PR_MESSAGE$ICON_FAILED **Visual regression test failed!**" >> message.md
+	echo "" >> message.md
 else
 	# visual regression passed
 	echo -e "\nVisual regression test passed!"
 	VR_PR_MESSAGE="$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**"
+	echo "$VR_PR_MESSAGE$ICON_PASSED **Visual regression test passed!**" >> message.md
+	echo "" >> message.md
 fi
 
 # VR_PR_MESSAGE="$VR_PR_MESSAGE \n\n[CircleCI Job $CI_BUILD_NUMBER $ICON_ARROW]($CI_BUILD_URL)\n\n"
@@ -108,14 +114,11 @@ fi
 
 # cp $VR_BASH_ENV  ${TEMP_DIR}/workspace/vr_bash_env.txt
 
-
 echo $VR_PR_MESSAGE
 
 (
   echo "VR_PR_MESSAGE=$VR_PR_MESSAGE"
 ) >> $GITHUB_ENV
-
-echo "$CONTENT_ENV" > message.md
 
 # Post the image back to the pull request on GitHub
 # echo -e "\nPosting visual regression results back to PR #$PR_NUMBER "

@@ -138,13 +138,13 @@ jobs:
         BRANCH: '${{ env.GITHUB_REF_NAME }}'
       run: ./.ci/scripts/env/copy-to-connect-bc.sh
 
-    - name: Comment PR
-      if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
-      uses: thollander/actions-comment-pull-request@v1
-      with:
-        message: "${{ env.VR_PR_MESSAGE }}"
-        pr_number: ${{ env.PR_NUMBER }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Comment PR
+    #   if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
+    #   uses: thollander/actions-comment-pull-request@v1
+    #   with:
+    #     message: "${{ env.VR_PR_MESSAGE }}"
+    #     pr_number: ${{ env.PR_NUMBER }}
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # - name: Comment PR 2
     #   if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
@@ -157,5 +157,5 @@ jobs:
     - name: Comment PR 2
       env:
         msg: ${{ env.VR_PR_MESSAGE }}
-      run: gh pr comment ${{ env.PR_NUMBER }} --body "$msg"
+      run: gh pr comment ${{ env.PR_NUMBER }} --body-file message.md
 
