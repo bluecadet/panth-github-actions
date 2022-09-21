@@ -3,7 +3,7 @@
 # Variables
 GITHUB_API_URL="https://api.github.com/repos/$CI_PROJECT_USERNAME/$CI_PROJECT_REPONAME"
 
-mkdir -p = "${TEMP_DIR}/workspace"
+mkdir -p "${TEMP_DIR}/workspace"
 
 # Check if we are NOT on the master branch and this is a PR
 if [[ ${CI_BRANCH} != "master" && -z ${PR_NUMBER} ]];

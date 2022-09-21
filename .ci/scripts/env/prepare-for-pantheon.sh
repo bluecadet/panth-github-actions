@@ -5,6 +5,8 @@ set -eo pipefail
 # include common funcs
 . ./.ci/scripts/lib/myFuncs
 
+terminus whoami
+
 echo "Prepring build for $TERMINUS_ENV. Pantheon test environment is $TERMINUS_SITE.$TERMINUS_ENV\n"
 
 # Report installed version of Terminus
