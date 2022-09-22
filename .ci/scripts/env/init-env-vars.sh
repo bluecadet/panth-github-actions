@@ -196,9 +196,13 @@ BACKSTOP_TEST_ENV=$DEFAULT_ENV
 #   echo "export ICON_ARROW='$ICON_ARROW'"
 # ) >> $BASH_ENV
 
-echo $TEMP_DIR
-mkdir -p "${TEMP_DIR}artifacts"
-ARTIFACTS_FULL_DIR=$( resolve_relative_path "${TEMP_DIR}artifacts" )
+ARTIFACTS_DIR="artifacts"
+mkdir -p "${TEMP_DIR}${ARTIFACTS_DIR}"
+ARTIFACTS_FULL_DIR=$( resolve_relative_path "${TEMP_DIR}${ARTIFACTS_DIR}" )
+
+
+
+
 
 (
   # echo 'PATH=$PATH:$HOME/bin'
@@ -219,12 +223,11 @@ ARTIFACTS_FULL_DIR=$( resolve_relative_path "${TEMP_DIR}artifacts" )
   echo "TEST_SITE_URL=https://test-$TERMINUS_SITE.pantheonsite.io/"
   echo "LIVE_SITE_URL=$LIVE_SITE_URL"
   echo "PANTHEON_LIVE_SITE_URL=$PANTHEON_LIVE_SITE_URL"
-  echo "ARTIFACTS_DIR=artifacts"
+  echo "ARTIFACTS_DIR=$ARTIFACTS_DIR"
   echo "ARTIFACTS_FULL_DIR=$ARTIFACTS_FULL_DIR"
   echo "SHOULD_BUILD_JOB=$SHOULD_BUILD_JOB"
   echo "CLONE_CONTENT=$CLONE_CONTENT"
   echo "GITHUB_API_URL=$GITHUB_API_URL"
-  echo "LATEST_GIT_MSG=$LATEST_GIT_MSG"
   echo "BACKSTOP_REF_ENV=$BACKSTOP_REF_ENV"
   echo "BACKSTOP_TEST_ENV=$BACKSTOP_TEST_ENV"
   echo "ICON_REPORT=$ICON_REPORT"
