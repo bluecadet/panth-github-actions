@@ -17,10 +17,16 @@ jobs:
         pantheon-machine-token: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
     - name: Backup Live
-      run: terminus backup:create panth-github-actions.live --keep-for=15 -n -q &
+      env:
+        TERMINUS_SITE: "${{ secrets.TERMINUS_SITE }}"
+      run: terminus backup:create $TERMINUS_SITE.live --keep-for=15 -n -q &
 
     - name: Backup Test
-      run: terminus backup:create panth-github-actions.test --keep-for=15 -n -q &
+      env:
+        TERMINUS_SITE: "${{ secrets.TERMINUS_SITE }}"
+      run: terminus backup:create $TERMINUS_SITE.test --keep-for=15 -n -q &
 
     - name: Backup Dev
-      run: terminus backup:create panth-github-actions.dev --keep-for=15 -n -q &
+      env:
+        TERMINUS_SITE: "${{ secrets.TERMINUS_SITE }}"
+      run: terminus backup:create $TERMINUS_SITE.dev --keep-for=15 -n -q &
