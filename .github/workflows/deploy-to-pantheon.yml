@@ -89,8 +89,8 @@ jobs:
         if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
         run: |
           npm install
-          # npx bldr build
-          gulp build
+          npm run test --if-present
+          npm run build --if-present
 
       - name: pre-deployer
         if: ${{ env.SHOULD_BUILD_JOB == 'true' }}

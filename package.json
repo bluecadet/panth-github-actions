@@ -4,6 +4,7 @@
   "description": "Basic gulp file",
   "main": "index.js",
   "scripts": {
+    "build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "out": "echo \"Hello World\" && exit 0"
   },
