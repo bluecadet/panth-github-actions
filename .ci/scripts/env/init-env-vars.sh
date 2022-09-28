@@ -25,6 +25,35 @@ node ./.ci/scripts/env/init-env-vars.js
 # environment variable.
 #
 
+
+# TZ: "/usr/share/zoneinfo/America/New_York"
+TZ=$(cat .projectconfig.json | jq -r '.TZ')
+if [ "$TZ" == "null" ]
+then
+  TZ="/usr/share/zoneinfo/America/New_York"
+fi
+
+# TEMP_DIR: "../"
+TEMP_DIR=$(cat .projectconfig.json | jq -r '.TEMP_DIR')
+if [ "$TEMP_DIR" == "null" ]
+then
+  TEMP_DIR="../"
+fi
+
+# CMS_PLATFORM: D9
+CMS_PLATFORM=$(cat .projectconfig.json | jq -r '.CMS_PLATFORM')
+if [ "$CMS_PLATFORM" == "null" ]
+then
+  CMS_PLATFORM="D9"
+fi
+
+# DEFAULT_SITE: ""
+DEFAULT_SITE=$(cat .projectconfig.json | jq -r '.DEFAULT_SITE')
+if [ "$DEFAULT_SITE" == "null" ]
+then
+  DEFAULT_SITE=""
+fi
+
 # CI_BRANCH=${CI_BRANCH:-$CIRCLE_BRANCH}
 # CI_BUILD_NUMBER=${CI_BUILD_NUMBER:-$CIRCLE_BUILD_NUM}
 # CI_PROJECT_NAME=${CI_PROJECT_NAME:-CIRCLE_PROJECT_REPONAME}
@@ -201,14 +230,14 @@ mkdir -p "${TEMP_DIR}${ARTIFACTS_DIR}"
 ARTIFACTS_FULL_DIR=$( resolve_relative_path "${TEMP_DIR}${ARTIFACTS_DIR}" )
 
 
-
-
-
 (
   # echo 'PATH=$PATH:$HOME/bin'
+  echo "TZ=$TZ"
+  echo "TEMP_DIR=$TEMP_DIR"
+  echo "CMS_PLATFORM=$CMS_PLATFORM"
+  echo "DEFAULT_SITE=$DEFAULT_SITE"
   echo "PR_NUMBER=$PR_NUMBER"
   echo "CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
-  echo "DEFAULT_SITE=$DEFAULT_SITE"
   echo "CI_PR_URL=$CI_PR_URL"
   echo "CI_PROJECT_USERNAME=$CI_PROJECT_USERNAME"
   echo "CI_PROJECT_REPONAME=$CI_PROJECT_REPONAME"

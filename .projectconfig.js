@@ -62,6 +62,10 @@ module.exports = {
   browsersyncOpts: {
     ghostMode: false
   },
+  TZ: "/usr/share/zoneinfo/America/New_York",
+  TEMP_DIR: "../",
+  CMS_PLATFORM: 'D9',
+  DEFAULT_SITE: "panth-github-actions",
   testingPaths: [
     {
       "label": "Home page",

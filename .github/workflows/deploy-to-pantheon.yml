@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, reopened]
 env:
-  TZ: "/usr/share/zoneinfo/America/New_York"
-  TEMP_DIR: "../"
-  CMS_PLATFORM: D9
-  DEFAULT_SITE: "panth-github-actions"
   TERM: dumb
   ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
   ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
