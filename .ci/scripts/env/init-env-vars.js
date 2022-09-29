@@ -4,11 +4,6 @@ var fs = require('fs');
 const CONFIG = require('../../../.projectconfig.js');
 
 // Check for required variables.
-// TZ: "/usr/share/zoneinfo/America/New_York",
-// TEMP_DIR: "../",
-// CMS_PLATFORM: 'D9',
-// DEFAULT_SITE: "panth-github-actions",
-// testingPaths: []
 
 let errs = [];
 if (!CONFIG.TZ) {
@@ -25,12 +20,6 @@ if (!CONFIG.DEFAULT_SITE) {
 }
 if (!CONFIG.testingPaths) {
   errs.push("The 'testingPaths' variable needs to be set in .projectconfig.js");
-}
-if (!CONFIG.foo) {
-  errs.push("The 'foo' variable needs to be set in .projectconfig.js");
-}
-if (!CONFIG.bar) {
-  errs.push("The 'bar' variable needs to be set in .projectconfig.js");
 }
 
 if (errs.length > 0) {
