@@ -1,6 +1,5 @@
 name: Lighthouse Testing
 on:
-  push:
   workflow_dispatch:
     inputs:
       urls:
@@ -30,10 +29,11 @@ jobs:
 
       - name: Generate URLs
         id: urls
-        uses: actions/github-script@v6
+        uses: actions/github-script@v6env:
+          inputUrls: '${{inputs.urls}}'
         with:
           script: |
-            const urls = ${{ inputs.urls }}.split(",");
+            const urls = inputUrls.split(",");
             core.setOutput('urls', urls);
 
       - name: Audit URLs using Lighthouse
