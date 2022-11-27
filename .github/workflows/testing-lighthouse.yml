@@ -43,7 +43,7 @@ jobs:
             else {
               urls = process.env.defaultUrls.split(",");
             }
-            core.setOutput('urls', urls);
+            core.setOutput('urls', urls.join('\n'));
 
       - name: Audit URLs using Lighthouse
         id: lighthouse
