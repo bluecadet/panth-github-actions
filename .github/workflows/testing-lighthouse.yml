@@ -1,0 +1,22 @@
+name: Lighthouse Testing
+on: workflow_dispatch
+# env:
+#   TERMINUS_SITE: "panth-github-actions"
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      # - uses: actions/checkout@v3
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            https://bluecadet.com/
+            https://bluecadet.com/about
+          # budgetPath: ./budget.json # test performance budgets
+          # uploadArtifacts: true # save results as an action artifacts
+          # temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+
+      # Debugger
+      - uses: hmarr/debug-action@v2
