@@ -7,7 +7,7 @@ on:
         description: URLs to test
         required: true
         type: string
-        default: "https://cartermuseum.org/,https://cartermuseum.org/about"
+        default: "https://cartermuseum.org/\nhttps://cartermuseum.org/about"
 
 
 # env:
@@ -19,12 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Debugger
+      - uses: hmarr/debug-action@v2
+
       - name: Audit URLs using Lighthouse
         id: lighthouse
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
-            https://cartermuseum.org/
+            ${{ inputs.urls }}
           # budgetPath: ./budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           # temporaryPublicStorage: true # upload lighthouse report to the temporary storage
