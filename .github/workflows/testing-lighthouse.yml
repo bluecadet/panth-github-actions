@@ -36,11 +36,12 @@ jobs:
           defaultUrls: '${{env.DEFAULT_URLS}}'
         with:
           script: |
+            let urls = "";
             if (process.env.inputUrls) {
-              const urls = process.env.inputUrls.split(",");
+              urls = process.env.inputUrls.split(",");
             }
             else {
-              const urls = process.env.defaultUrls.split(",");
+              urls = process.env.defaultUrls.split(",");
             }
             core.setOutput('urls', urls);
 
