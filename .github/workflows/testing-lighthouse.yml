@@ -29,7 +29,6 @@ jobs:
 
 
       - name: Generate URLs
-        if: ${{ inputs.urls }}
         id: urls
         uses: actions/github-script@v6
         env:
@@ -43,17 +42,6 @@ jobs:
             else {
               const urls = process.env.defaultUrls.split(",");
             }
-            core.setOutput('urls', urls);
-
-      - name: Generate URLs
-        if: ${{ inputs.urls }}
-        id: urls
-        uses: actions/github-script@v6
-        env:
-          inputUrls: '${{inputs.urls}}'
-        with:
-          script: |
-            const urls = process.env.inputUrls.split(",");
             core.setOutput('urls', urls);
 
       - name: Audit URLs using Lighthouse
