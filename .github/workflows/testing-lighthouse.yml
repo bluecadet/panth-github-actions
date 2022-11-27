@@ -1,5 +1,7 @@
 name: Lighthouse Testing
-on: workflow_dispatch
+on:
+  - push
+  - workflow_dispatch
 # env:
 #   TERMINUS_SITE: "panth-github-actions"
 
