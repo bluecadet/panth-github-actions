@@ -10,8 +10,8 @@ on:
         default: "https://cartermuseum.org/,https://cartermuseum.org/about"
 
 
-# env:
-#   TERMINUS_SITE: "panth-github-actions"
+env:
+  DEFAULT_URLS: "https://cartermuseum.org/,https://cartermuseum.org/about"
 
 jobs:
   lighthouse:
@@ -29,6 +29,24 @@ jobs:
 
 
       - name: Generate URLs
+        if: ${{ inputs.urls }}
+        id: urls
+        uses: actions/github-script@v6
+        env:
+          inputUrls: '${{inputs.urls}}'
+          defaultUrls: '${{env.DEFAULT_URLS}}'
+        with:
+          script: |
+            if (inputUrls) {
+              const urls = process.env.inputUrls.split(",");
+            }
+            else {
+              const urls = process.env.defaultUrls.split(",");
+            }
+            core.setOutput('urls', urls);
+
+      - name: Generate URLs
+        if: ${{ inputs.urls }}
         id: urls
         uses: actions/github-script@v6
         env:
