@@ -36,7 +36,7 @@ jobs:
           defaultUrls: '${{env.DEFAULT_URLS}}'
         with:
           script: |
-            if (inputUrls) {
+            if (process.env.inputUrls) {
               const urls = process.env.inputUrls.split(",");
             }
             else {
