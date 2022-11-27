@@ -107,3 +107,4 @@
 .DS_Store
 /node_modules
 /.cadet
+/output.txt
