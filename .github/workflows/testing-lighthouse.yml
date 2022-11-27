@@ -35,7 +35,7 @@ jobs:
           inputUrls: '${{inputs.urls}}'
         with:
           script: |
-            const urls = inputUrls.split(",");
+            const urls = process.env.inputUrls.split(",");
             core.setOutput('urls', urls);
 
       - name: Audit URLs using Lighthouse
