@@ -30,7 +30,8 @@ jobs:
 
       - name: Generate URLs
         id: urls
-        uses: actions/github-script@v6env:
+        uses: actions/github-script@v6
+        env:
           inputUrls: '${{inputs.urls}}'
         with:
           script: |
