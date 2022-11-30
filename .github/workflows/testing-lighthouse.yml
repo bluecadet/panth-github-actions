@@ -85,8 +85,8 @@ jobs:
         with:
           script: |
             let msg = {};
-            msg.id_string = result_ids;
-            msg.results = manifest;
+            msg.id_string = process.env.result_ids;
+            msg.results = process.env.manifest;
             core.setOutput('callback_msg', msg);
 
       - name: Post Artifacts
