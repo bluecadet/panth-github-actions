@@ -92,7 +92,7 @@ jobs:
           script: |
             let msg = {};
             msg.id_string = process.env.result_ids;
-            msg.results = process.env.manifest;
+            msg.results = JSON.parse(process.env.manifest);
             core.setOutput('callback_msg', msg);
 
       - name: Post Artifacts
