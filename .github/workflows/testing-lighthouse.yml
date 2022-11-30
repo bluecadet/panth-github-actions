@@ -8,8 +8,16 @@ on:
         required: true
         type: string
         default: "https://cartermuseum.org/,https://cartermuseum.org/about"
+      dir:
+        description: Directory for uploading artifacts.
+        required: false
+        type: string
+      result_ids:
+        description: Ids of report results. To be passed through
+        required: false
+        type: string
       callback:
-        description: URLs to test
+        description: Callback url for reporting results.
         required: false
         type: string
 
