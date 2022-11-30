@@ -100,4 +100,4 @@ jobs:
           RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
           MANIFEST: ${{ steps.lighthouse.outputs.manifest }}
           CALLBACK_MSG: ${{ steps.callback_msg.outputs.callback_msg }}
-        run: ./.github/scripts/env/lh-push-to-connect.sh
+        run: ./.github/scripts/lh-push-to-connect.sh
