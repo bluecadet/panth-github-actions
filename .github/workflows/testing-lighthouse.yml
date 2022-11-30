@@ -33,11 +33,9 @@ jobs:
       # Debugger
       # - uses: hmarr/debug-action@v2
 
-
       - name: Inputs
         run: |
           echo ${{ inputs.urls }}
-
 
       - name: Generate URLs
         id: urls
@@ -75,3 +73,31 @@ jobs:
           echo ${{ steps.lighthouse.outputs.links }}
           echo ${{ steps.lighthouse.outputs.assertionResults }}
           echo ${{ steps.lighthouse.outputs.manifest }}
+
+
+
+      - name: Generate Callback Message
+        id: callback_msg
+        uses: actions/github-script@v6
+        env:
+          result_ids: '${{ inputs.result_ids }}'
+          manifest: '${{ steps.lighthouse.outputs.manifest }}'
+        with:
+          script: |
+            let msg = {};
+            msg.id_string = result_ids;
+            msg.results = manifest;
+            core.setOutput('callback_msg', msg);
+
+      - name: Post Artifacts
+        timeout-minutes: 15
+        env:
+          CONNECT_BC_API: "${{ secrets.CONNECT_BC_KEY }}"
+          # URLS: "${{ inputs.urls }}"
+          DIR: "${{ inputs.dir }}"
+          # RESULT_IDS: "${{ inputs.result_ids }}"
+          CALLBACK: "${{ inputs.callback }}"
+          RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
+          MANIFEST: ${{ steps.lighthouse.outputs.manifest }}
+          CALLBACK_MSG: ${{ steps.callback_msg.outputs.callback_msg }}
+        run: ./.github/scripts/env/lh-push-to-connect.sh
