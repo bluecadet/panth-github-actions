@@ -13,6 +13,7 @@ echo $CALLBACK
 echo $CALLBACK_MSG
 
 cd $RESULTS_PATH
-rsync -raRLvz --relative --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' . --temp-dir=~/tmp/ $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files/$EXT_DIR
+# rsync -raRLvz --relative --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' . --temp-dir=~/tmp/ $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files/$EXT_DIR
+rsync -raRLvz --relative --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' . --temp-dir=~/tmp/ $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files/test-dir
 
 curl -H "api-key: $CONNECT_BC_API" -H 'Content-Type: application/json' -X POST CALLBACK -d $CALLBACK_MSG
