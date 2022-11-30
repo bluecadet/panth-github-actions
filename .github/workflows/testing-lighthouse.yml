@@ -30,6 +30,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.PANTHEON_SSH_KEY }}
+          config: ${{ secrets.SSH_CONFIG }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
       # Debugger
       # - uses: hmarr/debug-action@v2
 
