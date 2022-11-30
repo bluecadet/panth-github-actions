@@ -94,7 +94,7 @@ jobs:
         env:
           CONNECT_BC_API: "${{ secrets.CONNECT_BC_KEY }}"
           # URLS: "${{ inputs.urls }}"
-          DIR: "${{ inputs.dir }}"
+          EXT_DIR: "${{ inputs.dir }}"
           # RESULT_IDS: "${{ inputs.result_ids }}"
           CALLBACK: "${{ inputs.callback }}"
           RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
