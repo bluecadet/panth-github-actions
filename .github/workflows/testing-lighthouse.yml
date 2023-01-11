@@ -73,12 +73,12 @@ jobs:
       # Debugger
       - uses: hmarr/debug-action@v2
 
-      - name: Outputs
-        run: |
-          echo ${{ steps.lighthouse.outputs.resultsPath }}
-          echo ${{ steps.lighthouse.outputs.links }}
-          echo ${{ steps.lighthouse.outputs.assertionResults }}
-          echo ${{ steps.lighthouse.outputs.manifest }}
+      # - name: Outputs
+      #   run: |
+      #     echo ${{ steps.lighthouse.outputs.resultsPath }}
+      #     echo ${{ steps.lighthouse.outputs.links }}
+      #     echo ${{ steps.lighthouse.outputs.assertionResults }}
+      #     echo ${{ steps.lighthouse.outputs.manifest }}
 
 
 
