@@ -81,6 +81,7 @@
     "iOS 9"
   ],
   "dependencies": {
+    "@axe-core/cli": "^4.5.2",
     "eslint-plugin-yml": "^1.0.0",
     "flickity": "^2.2.2"
   }
