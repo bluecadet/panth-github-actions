@@ -59,9 +59,7 @@ jobs:
             }
             core.setOutput('urls', urls.join(', '));
 
-
       - name: Use Node.js with proper version.
-        if: ${{ env.SHOULD_BUILD_JOB == 'true' }}
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
