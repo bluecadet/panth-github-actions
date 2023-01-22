@@ -29,66 +29,66 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.PANTHEON_SSH_KEY }}
-          config: ${{ secrets.SSH_CONFIG }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      # - uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.PANTHEON_SSH_KEY }}
+      #     config: ${{ secrets.SSH_CONFIG }}
+      #     known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       # Debugger
       # - uses: hmarr/debug-action@v2
 
-      - name: Inputs
-        run: |
-          echo ${{ inputs.urls }}
+      # - name: Inputs
+      #   run: |
+      #     echo ${{ inputs.urls }}
 
-      - name: Generate URLs
-        id: urls
-        uses: actions/github-script@v6
-        env:
-          inputUrls: '${{inputs.urls}}'
-          defaultUrls: '${{env.DEFAULT_URLS}}'
-        with:
-          script: |
-            let urls = "";
-            if (process.env.inputUrls) {
-              urls = process.env.inputUrls.split(",");
-            }
-            else {
-              urls = process.env.defaultUrls.split(",");
-            }
-            core.setOutput('urls', urls.join(', '));
+      # - name: Generate URLs
+      #   id: urls
+      #   uses: actions/github-script@v6
+      #   env:
+      #     inputUrls: '${{inputs.urls}}'
+      #     defaultUrls: '${{env.DEFAULT_URLS}}'
+      #   with:
+      #     script: |
+      #       let urls = "";
+      #       if (process.env.inputUrls) {
+      #         urls = process.env.inputUrls.split(",");
+      #       }
+      #       else {
+      #         urls = process.env.defaultUrls.split(",");
+      #       }
+      #       core.setOutput('urls', urls.join(', '));
 
-      - name: Use Node.js with proper version.
+      # - name: Use Node.js with proper version.
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
 
       # Cache vendor folder
-      - name: Cache vendor folder
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-vendor
-        with:
-          path: ./vendor
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+      # - name: Cache vendor folder
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-vendor
+      #   with:
+      #     path: ./vendor
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: node builder
-        run: |
-          npm install
+      # - name: node builder
+      #   run: |
+      #     npm install
 
-      - uses: nanasess/setup-chromedriver@v1
-        with:
-          # Optional: do not specify to match Chrome's version
-          chromedriver-version: '106.0.5249.61'
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+      # - uses: nanasess/setup-chromedriver@v1
+      #   with:
+      #     # Optional: do not specify to match Chrome's version
+      #     chromedriver-version: '106.0.5249.61'
+      # - run: |
+      #     export DISPLAY=:99
+      #     chromedriver --url-base=/wd/hub &
+      #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
-      - name: Run Axe
-        run: |
-          npx axe ${{ steps.urls.outputs.urls }}
+      # - name: Run Axe
+      #   run: |
+      #     npx axe ${{ steps.urls.outputs.urls }}
 
       # - name: Audit URLs using Lighthouse
       #   id: lighthouse
@@ -101,7 +101,7 @@ jobs:
       #     # temporaryPublicStorage: true # upload lighthouse report to the temporary storage
 
       # Debugger
-      - uses: hmarr/debug-action@v2
+      # - uses: hmarr/debug-action@v2
 
       # - name: Outputs
       #   run: |
