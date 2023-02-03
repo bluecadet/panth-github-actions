@@ -54,13 +54,15 @@ jobs:
         env:
           PANTEHON_SITE: "${{ inputs.panth-site }}"
           PANTHEON_ENV: "${{ inputs.panth-env }}"
-        run: |
-          terminus env:metrics ${PANTEHON_SITE}.${PANTHEON_ENV} > cache_hit_ratio.json
-
-
-      - name: Post Artifacts
-        timeout-minutes: 15
-        env:
           CONNECT_BC_API: "${{ secrets.CONNECT_BC_KEY }}"
           CALLBACK: "${{ inputs.callback }}"
-        run: ./.github/scripts/chr-push-to-connect.sh
+        run: |
+          terminus env:metrics ${PANTEHON_SITE}.${PANTHEON_ENV} > cache_hit_ratio.json
+          curl -X POST -H "api-key: $CONNECT_BC_API" -H 'Content-Type: application/json' -d @"cache_hit_ratio.json" $CALLBACK
+
+      # - name: Post Artifacts
+      #   timeout-minutes: 15
+      #   env:
+      #     CONNECT_BC_API: "${{ secrets.CONNECT_BC_KEY }}"
+      #     CALLBACK: "${{ inputs.callback }}"
+      #   run: ./.github/scripts/chr-push-to-connect.sh
