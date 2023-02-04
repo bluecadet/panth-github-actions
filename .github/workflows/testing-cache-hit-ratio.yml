@@ -57,7 +57,7 @@ jobs:
           CONNECT_BC_API: "${{ secrets.CONNECT_BC_KEY }}"
           CALLBACK: "${{ inputs.callback }}"
         run: |
-          terminus env:metrics ${PANTEHON_SITE}.${PANTHEON_ENV} > cache_hit_ratio.json
+          terminus env:metrics ${PANTEHON_SITE}.${PANTHEON_ENV} --format=json > cache_hit_ratio.json
           curl -X POST -H "api-key: $CONNECT_BC_API" -H 'Content-Type: application/json' -d @"cache_hit_ratio.json" $CALLBACK
 
       # - name: Post Artifacts
