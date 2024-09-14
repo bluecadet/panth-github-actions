@@ -1,0 +1,14 @@
+name: Slack Notifications
+on:
+  push:
+
+env:
+
+jobs:
+
+  initial_msg:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
