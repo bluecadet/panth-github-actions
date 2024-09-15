@@ -245,6 +245,8 @@ jobs:
           # echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
           # echo "EOF" >> $GITHUB_ENV
           MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
+          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2/"&#x1F4DD;"//}
+          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2/"&#x274C;"//}
           echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
 
       # Debugger
