@@ -45,14 +45,16 @@ jobs:
       #     var data = JSON.parse(fs.readFileSync("./payload.json"));
       #     data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
       #     echo JSON.stringify(data) > ./payload.json
-      - name: Custom JS
-        id: custom_js
-        uses: actions/github-script@v7
+      - uses: actions/github-script@v7
         with:
           script: |
-            var data = JSON.parse(fs.readFileSync("./payload.json"));
+            const fs = require("fs");
+
+            var file_content = fs.readFileSync("./payload.json");
+            var data = JSON.parse(file_content);
             data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
-            echo JSON.stringify(data) > ./payload.json
+            # echo JSON.stringify(data) > ./payload.json
+            fs.writeFileSync("./payload.json", data);
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
