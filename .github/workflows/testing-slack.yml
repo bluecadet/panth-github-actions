@@ -19,6 +19,17 @@ jobs:
       - uses: qoomon/actions--context@v2
         id: context
 
+      # Debugger
+      - uses: hmarr/debug-action@v2
+
+      - name: Debug
+        uses: raven-actions/debug@v1
+        with:
+          vars-context: ${{ toJson(vars) }}  # optional
+          secrets-context: ${{ toJson(secrets) }}  # optional
+          needs-context: ${{ toJson(needs) }}  # optional
+          inputs-context: ${{ toJson(inputs) }}  # optional
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
