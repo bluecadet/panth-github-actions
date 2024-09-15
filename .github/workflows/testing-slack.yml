@@ -116,13 +116,13 @@ jobs:
           payload: |
             {
               "thread_ts": "${{ needs.initial_msg.outputs.slack_msg_ts }}",
-              "text": "Deployment finished (Completed)"
+              "text": "Deployment finished (Completed)",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "PHPSTAN results"
+                    "text": "-- PHPSTAN results -- ${{ steps.context.outputs.job_log_url }}"
                   }
                 }
               ]

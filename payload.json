@@ -3,6 +3,9 @@
   "text": "GitHub Action build Status",
   "blocks": [
     {
+      "type": "divider"
+    },
+    {
       "type": "header",
       "text": {
         "type": "plain_text",
