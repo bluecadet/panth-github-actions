@@ -40,6 +40,9 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
+      # Debugger
+      - uses: hmarr/debug-action@v2
+
       # - name: update payload
       #   run: |
       #     var data = JSON.parse(fs.readFileSync("./payload.json"));

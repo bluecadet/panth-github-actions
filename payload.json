@@ -83,7 +83,17 @@
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "## &#x1F4DD; BackstopJS Report: /r/n&#x274C; **Visual regression test failed!**/r/n[VR Report](https: //live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/20240914-203232/artifacts/backstop_data/html_report/index.html)"
+        "text": "## &#x1F4DD; BackstopJS Report: \r\n&#x274C; **Visual regression test failed!**\r\n[VR Report](https: //live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/20240914-203232/artifacts/backstop_data/html_report/index.html)"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "${{ github.actor }} started the process on GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n${{ env.MARKDOWN_CONTENTS }}"
       }
     }
   ]
