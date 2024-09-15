@@ -254,12 +254,13 @@ jobs:
           payload: |
             {
               "thread_ts": "${{ needs.initial_msg.outputs.slack_msg_ts }}",
+              "text": "",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ""
+                    "text": "${{ env.MARKDOWN_CONTENTS }}"
                   },
                   "accessory": {
                     "type": "button",
