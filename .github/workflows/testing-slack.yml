@@ -30,14 +30,14 @@ jobs:
           needs-context: ${{ toJson(needs) }}  # optional
           inputs-context: ${{ toJson(inputs) }}  # optional
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16'
 
-      - name: Install dependencies
-        run: |
-          npm install fs-extra
+      # - name: Install dependencies
+      #   run: |
+      #     npm install fs-extra
 
       # {
       #   "type": "section",
@@ -47,23 +47,34 @@ jobs:
       #   }
       # }
 
-      - name: Update footer.
-        run: |
-          node -e '
-          const fs = require("fs-extra");
-          const filePath = "./payload_template.json";
-          const json = fs.readJSONSync(filePath);
+      # - name: Update footer.
+      #   run: |
+      #     node -e '
+      #     const fs = require("fs-extra");
+      #     const filePath = "./payload_template.json";
+      #     const json = fs.readJSONSync(filePath);
 
-          json.blocks.push({
+      #     json.blocks.push({
+      #       "type": "section",
+      #       "text": {
+      #         "type": "mrkdwn",
+      #         "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+      #       }
+      #     });
+
+      #     fs.writeJSONSync("./payload.json", json, { spaces: 2 });
+      #     '
+      - name: Update footer
+        run: |
+          jq '.blocks += [{
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+              "text": "*${{ github.actor }}* started the process on ${{ github.ref_name }}. Run #${{ github.run_number }}. ${{ steps.context.outputs.job_log_url }}"
             }
-          });
-
-          fs.writeJSONSync("./payload.json", json, { spaces: 2 });
-          '
+          }]' payload.json > temp.json
+          mv -- temp.json payload.json
+          rm -f -- temp.json
 
       # C07MUHXPX97
       - name: Post to a Slack channel
@@ -123,24 +134,29 @@ jobs:
       #       # echo JSON.stringify(data) > ./payload.json
       #       fs.writeFileSync("./payload.json", data);
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16'
 
-      - name: Install dependencies
-        run: |
-          npm install fs-extra
+      # - name: Install dependencies
+      #   run: |
+      #     npm install fs-extra
 
-      - name: update payload
+      # - name: update payload
+      #   run: |
+      #     node -e '
+      #     const fs = require("fs-extra");
+      #     const filePath = "./payload.json";
+      #     const json = fs.readJSONSync(filePath);
+      #     json.blocks[3].elements[1].elements[0].elements[0].name = "red_circle";
+      #     fs.writeJSONSync(filePath, json, { spaces: 2 });
+      #     '
+      - name: Check jq
         run: |
-          node -e '
-          const fs = require("fs-extra");
-          const filePath = "./payload.json";
-          const json = fs.readJSONSync(filePath);
-          json.blocks[3].elements[1].elements[0].elements[0].name = "red_circle";
-          fs.writeJSONSync(filePath, json, { spaces: 2 });
-          '
+          jq '.blocks[3].elements[1].elements[0].elements[0].name = "large_green_circle"' payload.json > temp.json
+          mv -- temp.json payload.json
+          rm -f -- temp.json
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -150,15 +166,21 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
-      - name: update payload
+      # - name: update payload
+      #   run: |
+      #     node -e '
+      #     const fs = require("fs-extra");
+      #     const filePath = "./payload.json";
+      #     const json = fs.readJSONSync(filePath);
+      #     json.blocks[3].elements[1].elements[1].elements[0].name = "large_green_circle";
+      #     fs.writeJSONSync(filePath, json, { spaces: 2 });
+      #     '
+
+      - name: Check jq
         run: |
-          node -e '
-          const fs = require("fs-extra");
-          const filePath = "./payload.json";
-          const json = fs.readJSONSync(filePath);
-          json.blocks[3].elements[1].elements[1].elements[0].name = "large_green_circle";
-          fs.writeJSONSync(filePath, json, { spaces: 2 });
-          '
+          jq '.blocks[3].elements[1].elements[1].elements[0].name = "large_green_circle"' payload.json > temp.json
+          mv -- temp.json payload.json
+          rm -f -- temp.json
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
