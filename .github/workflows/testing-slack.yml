@@ -72,7 +72,7 @@ jobs:
           const fs = require("fs-extra");
           const filePath = "./payload.json";
           const json = fs.readJSONSync(filePath);
-          json.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
+          json.blocks[3].elements[1].elements[0].elements[0].name = "red_circle";
           fs.writeJSONSync(filePath, json, { spaces: 2 });
           '
 
