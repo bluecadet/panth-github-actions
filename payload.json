@@ -17,13 +17,6 @@
       "type": "divider"
     },
     {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
-      }
-    },
-    {
       "type": "rich_text",
       "elements": [
         {
@@ -31,7 +24,7 @@
           "elements": [
             {
               "type": "text",
-              "text": "Basic bullet list with rich elements\n"
+              "text": "Build Steps\r\n"
             }
           ]
         },
@@ -48,7 +41,7 @@
                 },
                 {
                   "type": "text",
-                  "text": " item 1: "
+                  "text": " Action Setup"
                 }
               ]
             },
@@ -61,7 +54,7 @@
                 },
                 {
                   "type": "text",
-                  "text": " item 2: "
+                  "text": " Prepped for Pantheon"
                 }
               ]
             },
@@ -70,11 +63,63 @@
               "elements": [
                 {
                   "type": "emoji",
-                  "name": "large_green_circle"
+                  "name": "white_circle"
                 },
                 {
                   "type": "text",
-                  "text": " item 3: "
+                  "text": " Preparing Node and Composer for build Artifacts"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Pre Deployer"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Deployer"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Install VisReg Tools"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Vis Reg Testing"
                 }
               ]
             }
@@ -89,7 +134,7 @@
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+        "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
       }
     }
   ]
