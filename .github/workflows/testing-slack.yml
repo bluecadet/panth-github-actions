@@ -24,21 +24,6 @@ jobs:
           # Slack channel id, channel name, or user id to post message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
           channel-id: 'C07MUHXPX97'
-          # For posting a rich message using Block Kit
-          # payload: |
-          #   {
-          #     "username": "Testing Action",
-          #     "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-          #     "blocks": [
-          #       {
-          #         "type": "section",
-          #         "text": {
-          #           "type": "mrkdwn",
-          #           "text": "old *bolded* text"
-          #         }
-          #       }
-          #     ]
-          #   }
           payload-file-path: "./payload.json"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -55,25 +40,19 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
+      - name: update payload
+        run: |
+          var data = JSON.parse(fs.readFileSync("./payload.json"));
+          data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
+          echo JSON.stringify(data) > ./payload.json
+
       - uses: slackapi/slack-github-action@v1.27.0
         with:
           # Unlike the step posting a new message, this step does not accept a channel name.
           # Please use a channel ID, not a name here.
           channel-id: "C07MUHXPX97"
           update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
-          payload: |
-            {
-              "text": "Blah blah blah",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*bolded* text"
-                  }
-                }
-              ]
-            }
+          payload-file-path: "./payload.json"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
