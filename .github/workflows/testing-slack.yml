@@ -70,7 +70,7 @@ jobs:
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "*${{ github.actor }}* started the process on ${{ github.ref_name }}. Run #${{ github.run_number }}. ${{ steps.context.outputs.job_log_url }}"
+              "text": "**${{ github.actor }}** started the process on *${{ github.ref_name }}*. Run #${{ github.run_number }}. [Job URL](${{ steps.context.outputs.job_log_url }})"
             }
           }]' payload_template.json > payload.json
 
