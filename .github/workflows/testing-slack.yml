@@ -70,7 +70,7 @@ jobs:
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "**${{ github.actor }}** started the process on *${{ github.ref_name }}*. Run #${{ github.run_number }}. [Job URL](${{ steps.context.outputs.job_log_url }})"
+              "text": "**${{ github.actor }}** started the process on *${{ github.ref_name }}*. Run #${{ github.run_number }}. <${{ steps.context.outputs.job_log_url }}|Job URL>)"
             }
           }]' payload_template.json > payload.json
 
@@ -290,19 +290,19 @@ jobs:
         with:
           name: message_payload
 
-      - name: Messages to env var
-        run: |
-          MARKDOWN_CONTENTS=$(cat message.md)
-          # echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
-          # echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
-          # echo "EOF" >> $GITHUB_ENV
-          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
-          echo ${MARKDOWN_CONTENTS2}
-          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x1F4DD;/}
-          echo ${MARKDOWN_CONTENTS2}
-          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x274C;/}
-          echo ${MARKDOWN_CONTENTS2}
-          echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
+      # - name: Messages to env var
+      #   run: |
+      #     MARKDOWN_CONTENTS=$(cat message.md)
+      #     # echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
+      #     # echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
+      #     # echo "EOF" >> $GITHUB_ENV
+      #     MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
+      #     echo ${MARKDOWN_CONTENTS2}
+      #     MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x1F4DD;/}
+      #     echo ${MARKDOWN_CONTENTS2}
+      #     MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x274C;/}
+      #     echo ${MARKDOWN_CONTENTS2}
+      #     echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
 
       # Debugger
       - uses: hmarr/debug-action@v2
