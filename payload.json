@@ -129,13 +129,6 @@
     },
     {
       "type": "divider"
-    },
-    {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
-      }
     }
   ]
 }

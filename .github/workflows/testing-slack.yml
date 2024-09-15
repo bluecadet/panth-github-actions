@@ -19,6 +19,32 @@ jobs:
       - uses: qoomon/actions--context@v2
         id: context
 
+      # {
+      #   "type": "section",
+      #   "text": {
+      #     "type": "mrkdwn",
+      #     "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+      #   }
+      # }
+
+      - name: Update footer.
+        run: |
+          node -e '
+          const fs = require("fs-extra");
+          const filePath = "./payload.json";
+          const json = fs.readJSONSync(filePath);
+
+          json.blocks.push({
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+            }
+          });
+
+          fs.writeJSONSync(filePath, json, { spaces: 2 });
+          '
+
       # C07MUHXPX97
       - name: Post to a Slack channel
         id: slack1
@@ -87,8 +113,50 @@ jobs:
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
-          # Unlike the step posting a new message, this step does not accept a channel name.
-          # Please use a channel ID, not a name here.
+          channel-id: "C07MUHXPX97"
+          update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
+          payload-file-path: "./payload.json"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: update payload
+        run: |
+          node -e '
+          const fs = require("fs-extra");
+          const filePath = "./payload.json";
+          const json = fs.readJSONSync(filePath);
+          json.blocks[3].elements[1].elements[1].elements[0].name = "green_circle";
+          fs.writeJSONSync(filePath, json, { spaces: 2 });
+          '
+
+      - uses: slackapi/slack-github-action@v1.27.0
+        with:
+          channel-id: "C07MUHXPX97"
+          update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
+          payload-file-path: "./payload.json"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - uses: slackapi/slack-github-action@v1.27.0
+        with:
+          channel-id: "C07MUHXPX97"
+          update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
+          payload-file-path: "./payload.json"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: update payload
+        run: |
+          node -e '
+          const fs = require("fs-extra");
+          const filePath = "./payload.json";
+          const json = fs.readJSONSync(filePath);
+          json.blocks[3].elements[1].elements[2].elements[0].name = "green_circle";
+          fs.writeJSONSync(filePath, json, { spaces: 2 });
+          '
+
+      - uses: slackapi/slack-github-action@v1.27.0
+        with:
           channel-id: "C07MUHXPX97"
           update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
           payload-file-path: "./payload.json"
@@ -116,7 +184,6 @@ jobs:
           payload: |
             {
               "thread_ts": "${{ needs.initial_msg.outputs.slack_msg_ts }}",
-              "text": "Deployment finished (Completed)",
               "blocks": [
                 {
                   "type": "section",
@@ -134,13 +201,6 @@ jobs:
                     "value": "phpstan_results",
                     "url": "${{ steps.context.outputs.job_log_url }}",
                     "action_id": "button-action"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
                   }
                 }
               ]
