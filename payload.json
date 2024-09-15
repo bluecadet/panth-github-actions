@@ -74,23 +74,17 @@
                   "text": " item 3: "
                 }
               ]
-            },
-            {
-              "type": "rich_text_section",
-              "elements": [
-                {
-                  "type": "emoji",
-                  "name": "large_green_circle"
-                },
-                {
-                  "type": "mrkdwn",
-                  "text": " item 3: ## &#x1F4DD; BackstopJS Report: /r/n&#x274C; **Visual regression test failed!**/r/n[VR Report](https: //live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/20240914-203232/artifacts/backstop_data/html_report/index.html)"
-                }
-              ]
             }
           ]
         }
       ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "## &#x1F4DD; BackstopJS Report: /r/n&#x274C; **Visual regression test failed!**/r/n[VR Report](https: //live-connect-bluecadet.pantheonsite.io/sites/default/files/vis-reg-reports/20240914-203232/artifacts/backstop_data/html_report/index.html)"
+      }
     }
   ]
 }
