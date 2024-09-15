@@ -72,9 +72,7 @@ jobs:
               "type": "mrkdwn",
               "text": "*${{ github.actor }}* started the process on ${{ github.ref_name }}. Run #${{ github.run_number }}. ${{ steps.context.outputs.job_log_url }}"
             }
-          }]' payload.json > temp.json
-          mv -- temp.json payload.json
-          rm -f -- temp.json
+          }]' payload_template.json > payload.json
 
       # C07MUHXPX97
       - name: Post to a Slack channel
