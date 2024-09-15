@@ -241,9 +241,9 @@ jobs:
       - name: Messages to env var
         run: |
           MARKDOWN_CONTENTS=$(cat message.md)
-          echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
-          echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          # echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
+          # echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
+          # echo "EOF" >> $GITHUB_ENV
           MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
           echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
 
