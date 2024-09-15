@@ -243,10 +243,14 @@ jobs:
         run: |
           # (echo "MESSAGE_MD_VAR=$(cat message.md)") >> "$GITHUB_ENV"
           MARKDOWN_CONTENTS=$(cat message.md)
-          MARKDOWN_CONTENTS=${MARKDOWN_CONTENTS//$'\r\n'/}
           echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
           echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
+          echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
+
+      # Debugger
+      - uses: hmarr/debug-action@v2
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -260,7 +264,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "${{ env.MARKDOWN_CONTENTS }}"
+                    "text": "lol: ${{ env.MARKDOWN_CONTENTS }}"
                   },
                   "accessory": {
                     "type": "button",
