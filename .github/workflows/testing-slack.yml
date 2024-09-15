@@ -40,7 +40,7 @@ jobs:
         run: |
           node -e '
           const fs = require("fs-extra");
-          const filePath = "./payload.json";
+          const filePath = "./payload_template.json";
           const json = fs.readJSONSync(filePath);
 
           json.blocks.push({
@@ -51,7 +51,7 @@ jobs:
             }
           });
 
-          fs.writeJSONSync(filePath, json, { spaces: 2 });
+          fs.writeJSONSync("./payload.json", json, { spaces: 2 });
           '
 
       # C07MUHXPX97
@@ -65,6 +65,12 @@ jobs:
           payload-file-path: "./payload.json"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Upload message file.
+        uses: actions/upload-artifact@v4
+        with:
+          name: message_payload
+          path: ./payload.json
 
 
 
@@ -80,6 +86,11 @@ jobs:
 
       - uses: qoomon/actions--context@v2
         id: context
+
+      - name: Download message Payload
+        uses: actions/download-artifact@v4
+        with:
+          name: message_payload
 
       # Debugger
       - uses: hmarr/debug-action@v2
@@ -193,6 +204,11 @@ jobs:
       - uses: qoomon/actions--context@v2
         id: context
 
+      - name: Download message Payload
+        uses: actions/download-artifact@v4
+        with:
+          name: message_payload
+
       - uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: "C07MUHXPX97"
@@ -238,6 +254,11 @@ jobs:
       - uses: qoomon/actions--context@v2
         id: context
 
+      - name: Download message Payload
+        uses: actions/download-artifact@v4
+        with:
+          name: message_payload
+
       - name: Messages to env var
         run: |
           MARKDOWN_CONTENTS=$(cat message.md)
@@ -246,9 +267,9 @@ jobs:
           # echo "EOF" >> $GITHUB_ENV
           MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS//$'\r\n'/}
           echo ${MARKDOWN_CONTENTS2}
-          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//"&#x1F4DD;"/}
+          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x1F4DD;/}
           echo ${MARKDOWN_CONTENTS2}
-          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//"&#x274C;"/}
+          MARKDOWN_CONTENTS2=${MARKDOWN_CONTENTS2//&#x274C;/}
           echo ${MARKDOWN_CONTENTS2}
           echo "MARKDOWN_CONTENTS2=$MARKDOWN_CONTENTS2" >> $GITHUB_ENV
 
