@@ -134,7 +134,7 @@ jobs:
           const fs = require("fs-extra");
           const filePath = "./payload.json";
           const json = fs.readJSONSync(filePath);
-          json.blocks[3].elements[1].elements[1].elements[0].name = "green_circle";
+          json.blocks[3].elements[1].elements[1].elements[0].name = "large_green_circle";
           fs.writeJSONSync(filePath, json, { spaces: 2 });
           '
 
@@ -154,15 +154,21 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
-      - name: update payload
+      # - name: update payload
+      #   run: |
+      #     node -e '
+      #     const fs = require("fs-extra");
+      #     const filePath = "./payload.json";
+      #     const json = fs.readJSONSync(filePath);
+      #     json.blocks[3].elements[1].elements[2].elements[0].name = "large_green_circle";
+      #     fs.writeJSONSync(filePath, json, { spaces: 2 });
+      #     '
+
+      - name: Check jq
         run: |
-          node -e '
-          const fs = require("fs-extra");
-          const filePath = "./payload.json";
-          const json = fs.readJSONSync(filePath);
-          json.blocks[3].elements[1].elements[2].elements[0].name = "green_circle";
-          fs.writeJSONSync(filePath, json, { spaces: 2 });
-          '
+          jq '.blocks[3].elements[1].elements[2].elements[0].name = "large_green_circle"' payload.json > temp.json
+          mv -- temp.json payload.json
+          rm -f -- temp.json
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -199,6 +205,61 @@ jobs:
                   "text": {
                     "type": "mrkdwn",
                     "text": "PHPSTAN results"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "Results",
+                      "emoji": true
+                    },
+                    "value": "phpstan_results",
+                    "url": "${{ steps.context.outputs.job_log_url }}",
+                    "action_id": "button-action"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+
+
+  reply_2:
+    runs-on: ubuntu-latest
+    needs: initial_msg
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - uses: qoomon/actions--context@v2
+        id: context
+
+      - name: Messages to env var
+        if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
+        run: |
+          # (echo "MESSAGE_MD_VAR=$(cat message.md)") >> "$GITHUB_ENV"
+          MARKDOWN_CONTENTS=$(cat message.md)
+          MARKDOWN_CONTENTS=${MARKDOWN_CONTENTS//$'\r\n'/}
+          echo "MARKDOWN_CONTENTS<<EOF" >> $GITHUB_ENV
+          echo "$MARKDOWN_CONTENTS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - uses: slackapi/slack-github-action@v1.27.0
+        with:
+          channel-id: "C07MUHXPX97"
+          payload: |
+            {
+              "thread_ts": "${{ needs.initial_msg.outputs.slack_msg_ts }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ""
                   },
                   "accessory": {
                     "type": "button",
