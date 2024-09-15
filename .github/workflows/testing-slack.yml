@@ -28,6 +28,7 @@ jobs:
           # See also: https://api.slack.com/methods/chat.postMessage#channels
           channel-id: 'C07MUHXPX97'
           payload-file-path: "./payload.json"
+          payload-file-path-parsed: false
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
@@ -92,6 +93,7 @@ jobs:
           channel-id: "C07MUHXPX97"
           update-ts: ${{ needs.initial_msg.outputs.slack_msg_ts }}
           payload-file-path: "./payload.json"
+          payload-file-path-parsed: false
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
@@ -140,7 +142,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.ref_name }}. ${{ steps.context.outputs.job_log_url }}"
+                    "text": "${{ github.actor }} started the process on ${{ github.ref_name }}. Run # ${{ github.run_number }}. ${{ steps.context.outputs.job_log_url }}"
                   }
                 }
               ]
