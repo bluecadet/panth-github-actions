@@ -19,6 +19,15 @@ jobs:
       - uses: qoomon/actions--context@v2
         id: context
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          npm install fs-extra
+
       # {
       #   "type": "section",
       #   "text": {
