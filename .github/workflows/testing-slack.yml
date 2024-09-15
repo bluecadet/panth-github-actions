@@ -57,6 +57,15 @@ jobs:
       #       # echo JSON.stringify(data) > ./payload.json
       #       fs.writeFileSync("./payload.json", data);
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          npm install fs-extra
+
       - name: update payload
         run: |
           node -e '
