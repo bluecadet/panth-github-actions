@@ -45,16 +45,27 @@ jobs:
       #     var data = JSON.parse(fs.readFileSync("./payload.json"));
       #     data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
       #     echo JSON.stringify(data) > ./payload.json
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require("fs");
 
-            var file_content = fs.readFileSync("./payload.json");
-            var data = JSON.parse(file_content);
-            data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
-            # echo JSON.stringify(data) > ./payload.json
-            fs.writeFileSync("./payload.json", data);
+      # - uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const fs = require("fs");
+
+      #       var file_content = fs.readFileSync("./payload.json");
+      #       var data = JSON.parse(file_content);
+      #       data.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
+      #       # echo JSON.stringify(data) > ./payload.json
+      #       fs.writeFileSync("./payload.json", data);
+
+      - name: update payload
+        run: |
+          node -e '
+          const fs = require("fs-extra");
+          const filePath = "./payload.json";
+          const json = fs.readJSONSync(filePath);
+          json.blocks[3].elements[1].elements[0].elements[0].name = 'red_circle';
+          fs.writeJSONSync(filePath, json, { spaces: 2 });
+          '
 
       - uses: slackapi/slack-github-action@v1.27.0
         with:
