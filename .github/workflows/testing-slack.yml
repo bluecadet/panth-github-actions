@@ -239,7 +239,6 @@ jobs:
         id: context
 
       - name: Messages to env var
-        if: ${{ env.SHOULD_BUILD_JOB == 'true' && env.PR_NUMBER != 0 }}
         run: |
           # (echo "MESSAGE_MD_VAR=$(cat message.md)") >> "$GITHUB_ENV"
           MARKDOWN_CONTENTS=$(cat message.md)
@@ -270,7 +269,7 @@ jobs:
                     "type": "button",
                     "text": {
                       "type": "plain_text",
-                      "text": "Results",
+                      "text": "Full Output",
                       "emoji": true
                     },
                     "value": "phpstan_results",
