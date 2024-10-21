@@ -24,7 +24,7 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
 
       # Debugger
-      - uses: hmarr/debug-action@v2
+      - uses: hmarr/debug-action@v3
 
 
       # Setup and cache node.
@@ -46,5 +46,5 @@ jobs:
         env:
           CONTEXT_GITHUB: ${{ toJson(github) }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_EVENT_TYPE: ${{ github.event.type }}
+          GITHUB_EVENT_ACTION: ${{ github.event.action }}
         run: node ./.ci/scripts/pr-notifications.js
