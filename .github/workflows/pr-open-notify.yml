@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
+  MSG_SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
 
 jobs:
 
@@ -33,6 +33,10 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
+      # Install core actions to set output variables.
+      - name: Install dependencies
+        run: npm install @actions/core
+
       # Cache vendor folder
       - name: Cache vendor folder
         uses: actions/cache@v4
@@ -42,9 +46,15 @@ jobs:
           path: ./vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
+      # Debugger
+      - uses: hmarr/debug-action@v3
+
       - name: run node script
         env:
           CONTEXT_GITHUB: ${{ toJson(github) }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_EVENT_ACTION: ${{ github.event.action }}
         run: node ./.ci/scripts/pr-notifications.js
+
+      # Debugger
+      - uses: hmarr/debug-action@v3
