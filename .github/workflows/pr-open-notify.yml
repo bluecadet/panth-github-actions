@@ -1,0 +1,26 @@
+name: Pull Request Open - Slack notifications
+on:
+  pull_request:
+    types: [opened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
+
+jobs:
+
+  init:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code.
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      # Debugger
+      - uses: hmarr/debug-action@v2
