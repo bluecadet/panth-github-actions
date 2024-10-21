@@ -44,5 +44,7 @@ jobs:
 
       - name: run node script
         env:
-          github: ${{ toJson(github) }}
+          CONTEXT_GITHUB: ${{ toJson(github) }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_TYPE: ${{ github.event.type }}
         run: node ./.ci/scripts/pr-notifications.js
