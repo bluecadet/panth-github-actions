@@ -58,7 +58,20 @@ jobs:
         run: node ./.ci/scripts/pr-notifications.js
 
       - name: Use the output variable
-        run: echo "The output is ${{ steps.process-body.outputs.myOutput }}"
+        run: |
+          echo "The output is ${{ steps.process-body.outputs.myOutput }}"
+          echo "The output is ${{ steps.process-body.outputs.slack_payload }}"
+          echo "The output is ${{ steps.process-body.outputs.pr_description }}"
+          echo "The output is ${{ steps.process-body.outputs.pr_description_data }}"
 
       # Debugger
       - uses: hmarr/debug-action@v3
+
+
+
+# Open Pr:
+#   I need to post a message to slack and save the message ID on the PR description.
+# PR #123 opened by @pingevt
+# Reopen Pr:
+#   start new message in slack.
+# Close Pr:
