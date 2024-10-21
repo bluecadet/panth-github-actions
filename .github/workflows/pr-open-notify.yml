@@ -59,10 +59,35 @@ jobs:
 
       - name: Use the output variable
         run: |
-          echo "The output is ${{ steps.process-body.outputs.myOutput }}"
           echo "The output is ${{ steps.process-body.outputs.slack_payload }}"
           echo "The output is ${{ steps.process-body.outputs.pr_description }}"
           echo "The output is ${{ steps.process-body.outputs.pr_description_data }}"
+
+
+      - name: Post to a Slack channel
+        id: slack1
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: 'C07MUHXPX97'
+          # payload-file-path: "./payload.json"
+          payload: ${{ steps.process-body.outputs.slack_payload }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Use the output variable
+        run: |
+          echo "The output is ${{ steps.slack1.outputs.ts }}"
+
+
+      - name: Update PR Description
+        uses: nefrob/pr-description@v1.2.0
+        with:
+          content: ${{ steps.process-body.outputs.pr_description }}\n${{ env.MSG_SEPERATOR }}\nmsg_id:${{}}
+          regex: ".*"
+          regexFlags: s
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Debugger
       - uses: hmarr/debug-action@v3
