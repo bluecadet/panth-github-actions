@@ -12,7 +12,8 @@ const CONTEXT_GITHUB = JSON.parse(process.env.CONTEXT_GITHUB);
 
 // Opening a PR.
 if (process.env.GITHUB_EVENT_NAME == "pull_request" && process.env.GITHUB_EVENT_ACTION == "opened") {
-  let current_description = CONTEXT_GITHUB.body ?? "";
+  console.log(CONTEXT_GITHUB);
+  let current_description = CONTEXT_GITHUB.pull_request.body ?? "";
   console.log(current_description);
 }
 

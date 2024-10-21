@@ -13,7 +13,7 @@ env:
 
 jobs:
 
-  init:
+  pr_notifications:
     runs-on: ubuntu-latest
     steps:
 
