@@ -50,11 +50,15 @@ jobs:
       - uses: hmarr/debug-action@v3
 
       - name: run node script
+        id: process-body
         env:
           CONTEXT_GITHUB: ${{ toJson(github) }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_EVENT_ACTION: ${{ github.event.action }}
         run: node ./.ci/scripts/pr-notifications.js
+
+      - name: Use the output variable
+        run: echo "The output is ${{ steps.process-body.outputs.myOutput }}"
 
       # Debugger
       - uses: hmarr/debug-action@v3
