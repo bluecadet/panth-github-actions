@@ -50,7 +50,7 @@ try {
       const regex = /^msg_id:(.*)/m;
       console.log(data.match(regex));
       const matches = data.match(regex);
-      msg_id = matches;
+      msg_id = matches[1];
     }
 
     payload = buildPayload("Hello World, I'm a status");
