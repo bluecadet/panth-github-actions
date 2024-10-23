@@ -1,0 +1,175 @@
+name: Pull Request Open - Slack notifications
+on:
+  pull_request:
+    types:
+      - assigned
+      - unassigned
+      - opened
+      - edited
+      - closed
+      - reopened
+      - converted_to_draft
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
+      - deleted
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  issue_comment:
+    types:
+      - created
+      - edited
+      - deleted
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MSG_SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
+
+jobs:
+
+  pr_notifications:
+    runs-on: ubuntu-latest
+    # We only ever want to run on a PR, not regular issues.
+    if: ${{ (github.event_name == 'issue_comment' && github.event.issue.pull_request) || github.event_name != 'issue_comment' }}
+    steps:
+
+      - name: Test Triggers
+        run: |
+          echo "The Event Name is ${{ github.event_name }}"
+          echo "The Action type is ${{ github.event.action }}"
+
+      - name: Checkout code.
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      # Debugger
+      - uses: hmarr/debug-action@v3
+
+
+      # Setup and cache node.
+      - name: Use Node.js with proper version.
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      # Install core actions to set output variables.
+      - name: Install dependencies
+        run: |
+          npm install @actions/core
+          npm install luxon
+
+      # Cache vendor folder
+      - name: Cache vendor folder
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-vendor
+        with:
+          path: ./vendor
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      # Debugger
+      - uses: hmarr/debug-action@v3
+
+      - name: run node script
+        id: process-body
+        env:
+          CONTEXT_GITHUB: ${{ toJson(github) }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_ACTION: ${{ github.event.action }}
+        run: node ./.ci/scripts/pr-notifications.js
+
+      - name: Use the output variable
+        run: |
+          echo "The output is ${{ steps.process-body.outputs.slack_payload }}"
+          echo "The output is ${{ steps.process-body.outputs.pr_description }}"
+          echo "The output is ${{ steps.process-body.outputs.pr_description_data }}"
+          echo "The output is ${{ steps.process-body.outputs.slack_ts }}"
+
+      - name: Post to a Slack channel
+        id: slack1
+        uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ steps.process-body.outputs.slack_ts == '' }}
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: 'C07MUHXPX97'
+          # payload-file-path: "./payload.json"
+          payload: ${{ steps.process-body.outputs.slack_payload }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Use the output variable
+        run: |
+          echo "The output is ${{ steps.slack1.outputs.ts }}"
+
+      - name: Update Slack channel
+        id: slack2
+        uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ steps.process-body.outputs.slack_ts != '' }}
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: 'C07MUHXPX97'
+          update-ts: ${{ steps.process-body.outputs.slack_ts }}
+          # payload-file-path: "./payload.json"
+          payload: ${{ steps.process-body.outputs.slack_payload }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Use the output variable
+        run: |
+          echo "The output is ${{ steps.slack2.outputs.ts }}"
+
+      - name: Which is which??
+        run: |
+          echo "What do i get? ${{ steps.slack1.outputs.ts || steps.slack2.outputs.ts }}"
+
+
+      - name: Update PR Description
+        uses: nefrob/pr-description@v1.2.0
+        with:
+          content: "${{ steps.process-body.outputs.pr_description }}\r\n${{ env.MSG_SEPERATOR }}\r\n\r\nmsg_id:${{ steps.slack1.outputs.ts || steps.slack2.outputs.ts }}"
+          regex: ".*"
+          regexFlags: s
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Debugger
+      - uses: hmarr/debug-action@v3
+
+
+
+# Open Pr:
+#   I need to post a message to slack and save the message ID on the PR description.
+# PR #123 opened by @pingevt
+# Reopen Pr:
+#   start new message in slack.
+# Close Pr:
