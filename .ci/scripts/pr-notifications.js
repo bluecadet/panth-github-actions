@@ -3,6 +3,7 @@
 // slack payload
 
 const core = require('@actions/core');
+const { DateTime } = require("luxon");
 
 
 
@@ -61,6 +62,7 @@ try {
   // draft: false,
   // created_at: '2024-10-23T00:34:50Z',
   // mergeable: true,
+  // mergeable_state: true,
   // comments: 1,
   // commits: 57,
   // review_comments: 0,
@@ -68,7 +70,39 @@ try {
   //   html_url
   //   login
 
-  payload = buildPayload("Hello World, I'm a status");
+  let descriptionTxt = "";
+
+  // PR State.
+  descriptionTxt += "state: " + CONTEXT_GITHUB.event.pull_request.state + "\r\n";
+
+  // Date.
+  // const date = new Date(Date.parse(CONTEXT_GITHUB.event.pull_request.created_at));
+  const date = DateTime.fromISO(CONTEXT_GITHUB.event.pull_request.created_at); // DATETIME_SHORT  .toLocaleString(DateTime.DATETIME_SHORT)
+  descriptionTxt += "created: " + date.toLocaleString(DateTime.DATETIME_SHORT) + "\r\n";
+
+  // Mergable.
+  descriptionTxt += "mergeable: " + CONTEXT_GITHUB.event.pull_request.mergeable + "\r\n";
+  descriptionTxt += "mergeable_state: " + CONTEXT_GITHUB.event.pull_request.mergeable_state + "\r\n";
+  descriptionTxt += "rebaseable: " + CONTEXT_GITHUB.event.pull_request.rebaseable + "\r\n";
+
+  // Commits.
+  descriptionTxt += "commits: " + CONTEXT_GITHUB.event.pull_request.commits + "\r\n";
+
+  // Comments.
+  descriptionTxt += "comments: " + CONTEXT_GITHUB.event.pull_request.comments + "\r\n";
+
+  // Review Comments.
+  descriptionTxt += "review_comments: " + CONTEXT_GITHUB.event.pull_request.review_comments + "\r\n";
+
+  CONTEXT_GITHUB.event.pull_request.requested_reviewers.forEach((el, i) => {
+    descriptionTxt += "reviewer(" + i + "): [" + el.login + "](" + el.html_url + ")\r\n";
+  });
+
+
+
+
+
+  payload = buildPayload(descriptionTxt);
   console.log(payload);
 
   core.setOutput('slack_payload', JSON.stringify(payload));
@@ -107,7 +141,8 @@ function buildPayload(statusMsg = "") {
   let titleBlock = {};
   titleBlock.type = "section";
   titleBlock.text = {};
-  titleBlock.text.type = "mrkdwn";
+  titleBlock.text.type = "plain_text";
+  titleBlock.text.emoji = true;
   let t = "";
   if (CONTEXT_GITHUB.event.pull_request.draft) {
     t += "draft ";
