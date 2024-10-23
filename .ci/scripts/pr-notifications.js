@@ -23,19 +23,22 @@ try {
   // if (process.env.GITHUB_EVENT_NAME == "pull_request" && process.env.GITHUB_EVENT_ACTION == "opened") {
     console.log(CONTEXT_GITHUB);
     let current_description = CONTEXT_GITHUB.event.pull_request.body ?? "";
+    console.log('current_description--->');
     console.log(current_description);
     let body = "";
     let data = "";
 
     if (current_description) {
       // MSG_SEPERATOR.
-      console.log(process.env.MSG_SEPERATOR);
+      console.log("SEP=> " + process.env.MSG_SEPERATOR);
       console.log(current_description.split(process.env.MSG_SEPERATOR));
 
       let bodyObj = current_description.split(process.env.MSG_SEPERATOR);
-      console.log('bodyObj');
+      console.log('bodyObj--->');
       console.log(bodyObj);
+      console.log('bodyObj 0 --->');
       console.log(bodyObj[0]);
+      console.log('bodyObj 1 --->');
       console.log(bodyObj[1]);
 
       body = bodyObj[0];
