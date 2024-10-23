@@ -61,6 +61,8 @@ try {
   // state: 'open',
   // draft: false,
   // created_at: '2024-10-23T00:34:50Z',
+  // closed_at: null,
+  // labels: [],
   // mergeable: true,
   // mergeable_state: true,
   // comments: 1,
@@ -91,12 +93,14 @@ try {
   // Comments.
   descriptionTxt += "comments: " + CONTEXT_GITHUB.event.pull_request.comments + "\r\n";
 
-  // Review Comments.
-  descriptionTxt += "review_comments: " + CONTEXT_GITHUB.event.pull_request.review_comments + "\r\n";
 
-  CONTEXT_GITHUB.event.pull_request.requested_reviewers.forEach((el, i) => {
-    descriptionTxt += "reviewer(" + i + "): [" + el.login + "](" + el.html_url + ")\r\n";
-  });
+  if (CONTEXT_GITHUB.event.pull_request.requested_reviewers.length > 0) {
+    // Review Comments.
+    descriptionTxt += "review_comments: " + CONTEXT_GITHUB.event.pull_request.review_comments + "\r\n";
+    CONTEXT_GITHUB.event.pull_request.requested_reviewers.forEach((el, i) => {
+      descriptionTxt += "reviewer(" + i + "): <" + el.html_url + "|" + el.login + ">\r\n";
+    });
+  }
 
 
 
