@@ -115,6 +115,7 @@ jobs:
       - name: Post to a Slack channel
         id: slack1
         uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ steps.slack1.outputs.ts == '' }}
         with:
           # Slack channel id, channel name, or user id to post message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
@@ -128,10 +129,33 @@ jobs:
         run: |
           echo "The output is ${{ steps.slack1.outputs.ts }}"
 
+      - name: Update Slack channel
+        id: slack2
+        uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ steps.slack1.outputs.ts != '' }}
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: 'C07MUHXPX97'
+          update-ts: ${{ steps.slack.outputs.ts }}
+          # payload-file-path: "./payload.json"
+          payload: ${{ steps.process-body.outputs.slack_payload }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Use the output variable
+        run: |
+          echo "The output is ${{ steps.slack2.outputs.ts }}"
+
+      - name: Which is which??
+        run: |
+          echo "What do i get? ${{ steps.slack1.outputs.ts || steps.slack2.outputs.ts }}"
+
+
       - name: Update PR Description
         uses: nefrob/pr-description@v1.2.0
         with:
-          content: "${{ steps.process-body.outputs.pr_description }}\n${{ env.MSG_SEPERATOR }}\nmsg_id:${{ steps.slack1.outputs.ts }}"
+          content: "${{ steps.process-body.outputs.pr_description }}\r\n\r\n${{ env.MSG_SEPERATOR }}\r\n\r\nmsg_id:${{ steps.slack1.outputs.ts }}"
           regex: ".*"
           regexFlags: s
           token: ${{ secrets.GITHUB_TOKEN }}

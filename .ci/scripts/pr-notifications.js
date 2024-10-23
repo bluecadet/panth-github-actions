@@ -27,6 +27,7 @@ try {
     console.log(current_description);
     let body = "";
     let data = "";
+    let msg_id = "";
 
     if (current_description) {
       // MSG_SEPERATOR.
@@ -48,16 +49,17 @@ try {
     if (data) {
       const regex = /^msg_id:(.*)/m;
       console.log(data.match(regex));
+      const matches = data.match(regex);
+      msg_id = matches;
     }
 
     payload = buildPayload("Hello World, I'm a status");
     console.log(payload);
 
-
     core.setOutput('slack_payload', JSON.stringify(payload));
     core.setOutput('pr_description', body);
     core.setOutput('pr_description_data', data);
-    core.setOutput('slack_ts', data);
+    core.setOutput('slack_ts', msg_id);
   // }
 } catch (error) {
   core.setFailed(error.message);
@@ -132,6 +134,7 @@ function buildPayload(statusMsg = "") {
   payload.blocks.push(titleBlock);
   payload.blocks.push(divBlock);
   payload.blocks.push(statusBlock);
+  payload.blocks.push(actionBlock);
 
   return payload;
 }
