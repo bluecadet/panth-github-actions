@@ -1,21 +1,69 @@
 name: Pull Request Open - Slack notifications
 on:
-  push:
   pull_request:
-    types: [opened]
+    types:
+      - assigned
+      - unassigned
+      - opened
+      - edited
+      - closed
+      - reopened
+      - converted_to_draft
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
+      - deleted
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+  issue_comment:
+    types:
+      - created
+      - edited
+      - deleted
+    branches:
+      - master
+      - main
+      - feature/slack-notifications
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  MSG_SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
+  MSG_SEPERATOR: "\n::::: DO NOT EDIT BELOW :::::\n"
 
 jobs:
 
   pr_notifications:
     runs-on: ubuntu-latest
+    # We only ever want to run on a PR, not regular issues.
+    if: ${{ github.event.issue.pull_request }}
     steps:
+
+      - name: Test Triggers
+        run: |
+          echo "The Event Name is ${{ github.event_name }}"
+          echo "The Action type is ${{ github.event.action }}"
 
       - name: Checkout code.
         uses: actions/checkout@v4
@@ -62,7 +110,7 @@ jobs:
           echo "The output is ${{ steps.process-body.outputs.slack_payload }}"
           echo "The output is ${{ steps.process-body.outputs.pr_description }}"
           echo "The output is ${{ steps.process-body.outputs.pr_description_data }}"
-
+          echo "The output is ${{ steps.process-body.outputs.slack_ts }}"
 
       - name: Post to a Slack channel
         id: slack1
@@ -80,11 +128,10 @@ jobs:
         run: |
           echo "The output is ${{ steps.slack1.outputs.ts }}"
 
-
       - name: Update PR Description
         uses: nefrob/pr-description@v1.2.0
         with:
-          content: "${{ steps.process-body.outputs.pr_description }}\n${{ env.MSG_SEPERATOR }}\nmsg_id:${{ steps.process-body.outputs.pr_description_data }}"
+          content: "${{ steps.process-body.outputs.pr_description }}\n${{ env.MSG_SEPERATOR }}\nmsg_id:${{ steps.slack1.outputs.ts }}"
           regex: ".*"
           regexFlags: s
           token: ${{ secrets.GITHUB_TOKEN }}

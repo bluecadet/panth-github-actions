@@ -37,6 +37,11 @@ try {
       data = bodyObj[1] ?? "";
     }
 
+    if (data) {
+      const regex = /^msg_id:(.*)/m;
+      console.log(data.match(regex));
+    }
+
     payload = buildPayload("Hello World, I'm a status");
     console.log(payload);
 
