@@ -50,7 +50,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MSG_SEPERATOR: "\n::::: DO NOT EDIT BELOW :::::\n"
+  MSG_SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
 
 jobs:
 
