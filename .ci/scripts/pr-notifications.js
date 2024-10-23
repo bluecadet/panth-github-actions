@@ -33,6 +33,11 @@ try {
       console.log(current_description.split(process.env.MSG_SEPERATOR));
 
       let bodyObj = current_description.split(process.env.MSG_SEPERATOR);
+      console.log('bodyObj');
+      console.log(bodyObj);
+      console.log(bodyObj[0]);
+      console.log(bodyObj[1]);
+
       body = bodyObj[0];
       data = bodyObj[1] ?? "";
     }
@@ -49,6 +54,7 @@ try {
     core.setOutput('slack_payload', JSON.stringify(payload));
     core.setOutput('pr_description', body);
     core.setOutput('pr_description_data', data);
+    core.setOutput('slack_ts', data);
   // }
 } catch (error) {
   core.setFailed(error.message);
