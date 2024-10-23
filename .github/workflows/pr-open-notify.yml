@@ -57,7 +57,7 @@ jobs:
   pr_notifications:
     runs-on: ubuntu-latest
     # We only ever want to run on a PR, not regular issues.
-    if: ${{ github.event.issue.pull_request }}
+    if: ${{ (github.event_name == 'issue_comment' && github.event.issue.pull_request) || github.event_name != 'issue_comment' }}
     steps:
 
       - name: Test Triggers
