@@ -7,7 +7,7 @@ const core = require('@actions/core');
 
 
 try {
-  console.log(process.env);
+  // console.log(process.env);
 
 
 
@@ -21,45 +21,60 @@ try {
 
   // Opening a PR.
   // if (process.env.GITHUB_EVENT_NAME == "pull_request" && process.env.GITHUB_EVENT_ACTION == "opened") {
-    console.log(CONTEXT_GITHUB);
-    let current_description = CONTEXT_GITHUB.event.pull_request.body ?? "";
-    console.log('current_description--->');
-    console.log(current_description);
-    let body = "";
-    let data = "";
-    let msg_id = "";
+  console.log(CONTEXT_GITHUB);
+  console.log(CONTEXT_GITHUB.event.pull_request.requested_reviewers);
+  console.log(CONTEXT_GITHUB.event.pull_request.user);
 
-    if (current_description) {
-      // MSG_SEPERATOR.
-      console.log("SEP=> " + process.env.MSG_SEPERATOR);
-      console.log(current_description.split(process.env.MSG_SEPERATOR));
+  let current_description = CONTEXT_GITHUB.event.pull_request.body ?? "";
+  console.log('current_description--->');
+  console.log(current_description);
+  let body = "";
+  let data = "";
+  let msg_id = "";
 
-      let bodyObj = current_description.split(process.env.MSG_SEPERATOR);
-      console.log('bodyObj--->');
-      console.log(bodyObj);
-      console.log('bodyObj 0 --->');
-      console.log(bodyObj[0]);
-      console.log('bodyObj 1 --->');
-      console.log(bodyObj[1]);
+  if (current_description) {
+    // MSG_SEPERATOR.
+    console.log("SEP=> " + process.env.MSG_SEPERATOR);
+    console.log(current_description.split(process.env.MSG_SEPERATOR));
 
-      body = bodyObj[0];
-      data = bodyObj[1] ?? "";
-    }
+    let bodyObj = current_description.split(process.env.MSG_SEPERATOR);
+    console.log('bodyObj--->');
+    console.log(bodyObj);
+    console.log('bodyObj 0 --->');
+    console.log(bodyObj[0]);
+    console.log('bodyObj 1 --->');
+    console.log(bodyObj[1]);
 
-    if (data) {
-      const regex = /^msg_id:(.*)/m;
-      console.log(data.match(regex));
-      const matches = data.match(regex);
-      msg_id = matches[1];
-    }
+    body = bodyObj[0];
+    data = bodyObj[1] ?? "";
+  }
 
-    payload = buildPayload("Hello World, I'm a status");
-    console.log(payload);
+  if (data) {
+    const regex = /^msg_id:(.*)/m;
+    console.log(data.match(regex));
+    const matches = data.match(regex);
+    msg_id = matches[1];
+  }
 
-    core.setOutput('slack_payload', JSON.stringify(payload));
-    core.setOutput('pr_description', body);
-    core.setOutput('pr_description_data', data);
-    core.setOutput('slack_ts', msg_id);
+  // Build status msg
+  // state: 'open',
+  // draft: false,
+  // created_at: '2024-10-23T00:34:50Z',
+  // mergeable: true,
+  // comments: 1,
+  // commits: 57,
+  // review_comments: 0,
+  // requested_reviewers: [],
+  //   html_url
+  //   login
+
+  payload = buildPayload("Hello World, I'm a status");
+  console.log(payload);
+
+  core.setOutput('slack_payload', JSON.stringify(payload));
+  core.setOutput('pr_description', body);
+  core.setOutput('pr_description_data', data);
+  core.setOutput('slack_ts', msg_id);
   // }
 } catch (error) {
   core.setFailed(error.message);
