@@ -71,6 +71,7 @@ try {
   // requested_reviewers: [],
   //   html_url
   //   login
+  //   avatar_url
 
   let descriptionTxt = "";
 
@@ -80,19 +81,20 @@ try {
   // Date.
   // const date = new Date(Date.parse(CONTEXT_GITHUB.event.pull_request.created_at));
   const date = DateTime.fromISO(CONTEXT_GITHUB.event.pull_request.created_at); // DATETIME_SHORT  .toLocaleString(DateTime.DATETIME_SHORT)
-  descriptionTxt += "created: " + date.toLocaleString(DateTime.DATETIME_SHORT) + "\r\n";
+  // descriptionTxt += "created: " + date.toLocaleString(DateTime.DATETIME_SHORT) + "\r\n";
 
   // Mergable.
-  descriptionTxt += "mergeable: " + CONTEXT_GITHUB.event.pull_request.mergeable + "\r\n";
-  descriptionTxt += "mergeable_state: " + CONTEXT_GITHUB.event.pull_request.mergeable_state + "\r\n";
-  descriptionTxt += "rebaseable: " + CONTEXT_GITHUB.event.pull_request.rebaseable + "\r\n";
+  // descriptionTxt += "mergeable: " + CONTEXT_GITHUB.event.pull_request.mergeable + "\r\n";
+  // descriptionTxt += "mergeable_state: " + CONTEXT_GITHUB.event.pull_request.mergeable_state + "\r\n";
+  // descriptionTxt += "rebaseable: " + CONTEXT_GITHUB.event.pull_request.rebaseable + "\r\n";
 
   // Commits.
-  descriptionTxt += "commits: " + CONTEXT_GITHUB.event.pull_request.commits + "\r\n";
+  // descriptionTxt += "commits: " + CONTEXT_GITHUB.event.pull_request.commits + "\r\n";
 
   // Comments.
-  descriptionTxt += "comments: " + CONTEXT_GITHUB.event.pull_request.comments + "\r\n";
+  // descriptionTxt += "comments: " + CONTEXT_GITHUB.event.pull_request.comments + "\r\n";
 
+  descriptionTxt += ":page_facing_up: :eyes: :large_green_circle: :white_check_mark: :large_yellow_square: :fire: \r\n";
 
   if (CONTEXT_GITHUB.event.pull_request.requested_reviewers.length > 0) {
     // Review Comments.
@@ -101,6 +103,8 @@ try {
       descriptionTxt += "reviewer(" + i + "): <" + el.html_url + "|" + el.login + ">\r\n";
     });
   }
+
+
 
 
 
@@ -139,6 +143,7 @@ function buildPayload(statusMsg = "") {
   const CONTEXT_GITHUB = JSON.parse(process.env.CONTEXT_GITHUB);
 
   let payload = {};
+  payload.title = CONTEXT_GITHUB.event.pull_request.title;
   payload.blocks = [];
 
   // Title.
@@ -149,7 +154,7 @@ function buildPayload(statusMsg = "") {
   titleBlock.text.emoji = true;
   let t = "";
   if (CONTEXT_GITHUB.event.pull_request.draft) {
-    t += "draft ";
+    t += ":page_facing_up: draft ";
   }
   t += "PR #" + CONTEXT_GITHUB.event.number;
   t += " | " + CONTEXT_GITHUB.event.pull_request.title;
@@ -166,6 +171,22 @@ function buildPayload(statusMsg = "") {
   statusBlock.text = {};
   statusBlock.text.type = "mrkdwn";
   statusBlock.text.text = statusMsg;
+
+  // Context.
+  let contextBlock = {};
+  contextBlock.type = "context";
+  contextBlock.elements = [];
+  contextBlock.elements.push({
+    type: 'image',
+    image_url: CONTEXT_GITHUB.event.pull_request.user.avatar_url,
+    alt_text: 'User Avatar'
+  });
+  // CONTEXT_GITHUB.event.pull_request.user.avatar_url
+  const date = DateTime.fromISO(CONTEXT_GITHUB.event.pull_request.created_at);
+  contextBlock.elements.push({
+    type: 'mrkdwn',
+    text: '<' + CONTEXT_GITHUB.event.pull_request.user.html_url + '|' + CONTEXT_GITHUB.event.pull_request.user.login + '> created this PR on ' + date.toLocaleString(DateTime.DATETIME_SHORT)
+  });
 
   // Action w/ link.
   let actionBlock = {};
@@ -187,6 +208,7 @@ function buildPayload(statusMsg = "") {
   // Put it all together.
   payload.blocks.push(titleBlock);
   payload.blocks.push(divBlock);
+  // payload.blocks.push(statusBlock);
   payload.blocks.push(statusBlock);
   payload.blocks.push(actionBlock);
 
