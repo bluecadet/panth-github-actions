@@ -76,7 +76,7 @@ try {
   let descriptionTxt = "";
 
   // PR State.
-  descriptionTxt += "state: " + CONTEXT_GITHUB.event.pull_request.state + "\r\n";
+  descriptionTxt += "*state:* " + CONTEXT_GITHUB.event.pull_request.state + "\r\n";
 
   // Date.
   // const date = new Date(Date.parse(CONTEXT_GITHUB.event.pull_request.created_at));
@@ -94,7 +94,7 @@ try {
   // Comments.
   // descriptionTxt += "comments: " + CONTEXT_GITHUB.event.pull_request.comments + "\r\n";
 
-  descriptionTxt += ":page_facing_up: :eyes: :large_green_circle: :white_check_mark: :large_yellow_square: :fire: \r\n";
+  descriptionTxt += "\r\n:page_facing_up: :eyes: :large_green_circle: :white_check_mark: :large_yellow_square: :fire: \r\n\r\n";
 
   if (CONTEXT_GITHUB.event.pull_request.requested_reviewers.length > 0) {
     // Review Comments.
@@ -152,12 +152,12 @@ function buildPayload(statusMsg = "") {
   titleBlock.text = {};
   titleBlock.text.type = "plain_text";
   titleBlock.text.emoji = true;
-  let t = "";
+  let t = "*";
   if (CONTEXT_GITHUB.event.pull_request.draft) {
     t += ":page_facing_up: draft ";
   }
   t += "PR #" + CONTEXT_GITHUB.event.number;
-  t += " | " + CONTEXT_GITHUB.event.pull_request.title;
+  t += " | " + CONTEXT_GITHUB.event.pull_request.title + "*";
 
   titleBlock.text.text = t;
 
@@ -208,8 +208,9 @@ function buildPayload(statusMsg = "") {
   // Put it all together.
   payload.blocks.push(titleBlock);
   payload.blocks.push(divBlock);
-  // payload.blocks.push(statusBlock);
   payload.blocks.push(statusBlock);
+  payload.blocks.push(contextBlock);
+  payload.blocks.push(divBlock);
   payload.blocks.push(actionBlock);
 
   return payload;
