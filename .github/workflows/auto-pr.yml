@@ -1,0 +1,28 @@
+name: Pull Request Action
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 17 * * 1-5"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MSG_SEPERATOR: "::::: DO NOT EDIT BELOW :::::"
+
+jobs:
+  auto_pr:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Checkout code.
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
+      #     ref: ${{ github.head_ref || github.ref_name }}
+
+      - name:
+        # run: gh pr create -B test -H bluecadet --title ''
+        run: gh pr create -B master -H feature/slack-notifications --title 'This is a PR bwahhaha' --assignee pingvt --reviewer pingevt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
