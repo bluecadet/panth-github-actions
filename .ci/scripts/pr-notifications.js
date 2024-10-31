@@ -98,7 +98,7 @@ try {
 
   if (CONTEXT_GITHUB.event.pull_request.requested_reviewers.length > 0) {
     // Review Comments.
-    descriptionTxt += "review_comments: " + CONTEXT_GITHUB.event.pull_request.review_comments + "\r\n";
+    // descriptionTxt += "review_comments: " + CONTEXT_GITHUB.event.pull_request.review_comments + "\r\n";
     CONTEXT_GITHUB.event.pull_request.requested_reviewers.forEach((el, i) => {
       descriptionTxt += "reviewer(" + i + "): <" + el.html_url + "|" + el.login + ">\r\n";
     });
