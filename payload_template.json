@@ -1,0 +1,134 @@
+{
+  "username": "Testing Action",
+  "text": "GitHub Action build Status",
+  "blocks": [
+    {
+      "type": "divider"
+    },
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "GitHub Action build Status Header",
+        "emoji": true
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "rich_text",
+      "elements": [
+        {
+          "type": "rich_text_section",
+          "elements": [
+            {
+              "type": "text",
+              "text": "Build Steps\r\n"
+            }
+          ]
+        },
+        {
+          "type": "rich_text_list",
+          "style": "bullet",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Action Setup"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Prepped for Pantheon"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Preparing Node and Composer for build Artifacts"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Pre Deployer"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Deployer"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Install VisReg Tools"
+                }
+              ]
+            },
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "white_circle"
+                },
+                {
+                  "type": "text",
+                  "text": " Vis Reg Testing"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    }
+  ]
+}
