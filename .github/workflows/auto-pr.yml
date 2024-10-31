@@ -31,7 +31,8 @@ jobs:
           git fetch
           git checkout -b ${{ env.BRANCH }}
           git push origin ${{ env.BRANCH }}
-          gh pr create --repo ${{ env.GITHUB_REF_NAME }} -B master -H ${{ env.BRANCH }} --title 'Daily merge to TEST' --body "Daily merge $(date +'%Y-%m-%d %H:%M:%S')" --assignee pingevt --reviewer pingevt
+          echo ${{ github.head_ref || github.ref_name }}
+          gh pr create --repo ${{ github.ref_name }} -B master -H ${{ env.BRANCH }} --title 'Daily merge to TEST' --body "Daily merge $(date +'%Y-%m-%d %H:%M:%S')" --assignee pingevt --reviewer pingevt
         env:
           BRANCH: daily/$(date +'%Y-%m-%d')-${{ github.run_id }}-${{ github.run_attempt }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
