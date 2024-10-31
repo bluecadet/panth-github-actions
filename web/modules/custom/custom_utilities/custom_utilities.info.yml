@@ -1,6 +1,0 @@
-name: Custom Utilities
-type: module
-description: Funcs and methods to test
-package: Bluecadet
-version: '9.x-1.0'
-core_version_requirement: ^9
