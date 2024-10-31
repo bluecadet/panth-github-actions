@@ -1,0 +1,38 @@
+name: Pull Request Action
+on:
+  push:
+    branches:
+      - "feature/slack-notifications"
+  workflow_dispatch:
+  schedule:
+    - cron: "5 17 * * 1-5"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  auto_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code.
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      # Debugger
+      - uses: hmarr/debug-action@v3
+
+      - name: Create branch and PR
+        run: |
+          git remote show origin
+          git remote update
+          git fetch
+          git checkout -b ${{ env.BRANCH }}
+          git push origin ${{ env.BRANCH }}
+          echo ${{ github.repository }}
+          gh pr create --repo ${{ github.repository }} -B master -H ${{ env.BRANCH }} --title 'Daily merge to TEST' --body "Daily merge $(date +'%Y-%m-%d %H:%M:%S')" --assignee pingevt --reviewer pingevt
+        env:
+          BRANCH: daily/$(date +'%Y-%m-%d')-${{ github.run_id }}-${{ github.run_attempt }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
