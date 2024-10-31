@@ -26,9 +26,12 @@ jobs:
 
       - name: Create branch and PR
         run: |
+          git remote show origin
+          git remote update
+          git fetch
           git checkout -b ${{ env.BRANCH }}
           git push origin ${{ env.BRANCH }}
-          gh pr create --repo bluecadet/panth-github-actions -B master -H ${{ env.BRANCH }} --title 'Daily merge to TEST' --body "Daily merge $(date +'%Y-%m-%d %H:%M:%S')" --assignee pingevt --reviewer pingevt
+          gh pr create --repo ${{ env.GITHUB_REF_NAME }} -B master -H ${{ env.BRANCH }} --title 'Daily merge to TEST' --body "Daily merge $(date +'%Y-%m-%d %H:%M:%S')" --assignee pingevt --reviewer pingevt
         env:
-          BRANCH: daily/$(date +'%Y-%m-%d)-${{ github.run_id }}-${{ github.run_attempt }}
+          BRANCH: daily/$(date +'%Y-%m-%d')-${{ github.run_id }}-${{ github.run_attempt }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
