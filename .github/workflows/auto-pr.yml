@@ -26,6 +26,6 @@ jobs:
 
       - name:
         # run: gh pr create -B test -H bluecadet --title ''
-        run: gh pr create -B master -H feature/slack-notifications --title 'This is a PR bwahhaha' --assignee pingvt --reviewer pingevt
+        run: gh pr create -B master -H feature/slack-notifications --title 'This is a PR bwahhaha' --body "Daily merge" --assignee pingvt --reviewer pingevt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
